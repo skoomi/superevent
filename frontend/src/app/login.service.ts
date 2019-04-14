@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -8,7 +9,7 @@ export class LoginService {
 
   authenticated = false;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   authenticate(credentials, callback) {
@@ -17,7 +18,8 @@ export class LoginService {
             authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
         } : {});
 
-        this.http.get('user', {headers: headers}).subscribe(response => {
+        this.http.get('http://localhost:8080/login', {headers: headers}).subscribe(response => {
+          console.log(response['authorities']);
             if (response['name']) {
                 this.authenticated = true;
             } else {
@@ -27,4 +29,8 @@ export class LoginService {
         });
 
     }
+    test() {
+      this.http.get<String>('http://localhost:8080/home/ho').subscribe(() => {
+        console.log("asd"); });
+      }
 }

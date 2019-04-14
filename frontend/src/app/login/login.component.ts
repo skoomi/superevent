@@ -19,5 +19,7 @@ export class LoginComponent {
     });
     return false;
   }
-
+  but() {
+    this.loginService.test();
+  }
 }

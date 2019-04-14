@@ -12,7 +12,7 @@ import { finalize } from 'rxjs/operators';
 export class NavbarComponent implements OnInit {
 
   constructor(private loginService: LoginService, private http: HttpClient, private router: Router) {
-    this.loginService.authenticate(undefined, undefined);
+    // this.loginService.authenticate(undefined, undefined);
   }
   logout() {
     this.http.post('logout', {}).pipe(finalize(() => {
