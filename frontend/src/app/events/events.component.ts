@@ -1,44 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  description: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 1,
-    name: 'Hydrogen',
-    weight: 1.0079,
-    symbol: 'H',
-    description: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
-        atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`
-  }];
+import { MyEvent } from '../model/myevent';
 
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
 export class EventsComponent implements OnInit {
 
+  events: MyEvent[] = [{id: 0, name: 'Kurs Java SE - Podstawy', price: 1234, startDate: new Date('12-03-2019'), endDate: new Date('12-04-2019'), lessons: 12, timetable: "pn,sr,czw 8:00 - 17:00", description: 'Opis musi byc', shortDescription: 'Krótki opis kursu, informacje ogólne,', imgPath: 'assets/img/java-logo.jpg'},
+                      {id: 1, name: 'Kurs Java SE - Zaawansowany', price: 5678, startDate: new Date('06-05-2019'), endDate: new Date('06-07-2019'), lessons: 28, timetable: "pn,sr,czw 8:00 - 17:00", description: 'Opis musi byc', shortDescription: 'Krótki opis kursu drugiego, informacje ogólne,', imgPath: 'https://4.imimg.com/data4/JH/GT/GLADMIN-10326294/wp-content-uploads-2015-11-advance-java-affy-250x250.jpg'}];
   constructor() { }
 
   ngOnInit() {
   }
 
-  dataSource = ELEMENT_DATA;
-  columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
-  expandedElement: PeriodicElement | null;
+  isFull(): boolean{
+
+    return true;
+  }
+
 }
