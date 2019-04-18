@@ -1,4 +1,3 @@
-import { LoginService } from './login.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { EventsComponent } from './events/events.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
+import { AuthenticationService } from './authentication.service';
 
 
 const routes: Routes = [
@@ -38,7 +38,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MatTableModule
   ],
-  providers: [LoginService],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

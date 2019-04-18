@@ -5,15 +5,22 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthenticationService {
 
-  authenticated = false;
+  isUserLoggedIn() {
+    let user = sessionStorage.getItem('username')
+    console.log(!(user === null))
+    return !(user === null)
+  }
+  logOut() {
+    sessionStorage.removeItem('username')
+  }
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
   authenticate(credentials, callback) {
-
+    console.log("authenticate: " + credentials);
         const headers = new HttpHeaders(credentials ? {
             authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
         } : {});
@@ -21,9 +28,10 @@ export class LoginService {
         this.http.get('http://localhost:8080/login', {headers: headers}).subscribe(response => {
           console.log(response['authorities']);
             if (response['name']) {
-                this.authenticated = true;
+                sessionStorage.setItem('username', response['name'])
+                // this.authenticated = true;
             } else {
-                this.authenticated = false;
+                // this.authenticated = false;
             }
             return callback && callback();
         });
