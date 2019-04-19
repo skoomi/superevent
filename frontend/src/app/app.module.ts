@@ -12,13 +12,14 @@ import { EventsComponent } from './events/events.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import { AuthenticationService } from './authentication.service';
+import { AuthGuardService } from './auth-guard.service';
 
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home'},
   { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'events', component: EventsComponent},
+  { path: 'events', component: EventsComponent, canActivate:[AuthGuardService]},
 ];
 
 

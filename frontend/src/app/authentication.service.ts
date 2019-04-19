@@ -8,19 +8,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AuthenticationService {
 
   isUserLoggedIn() {
-    let user = sessionStorage.getItem('username')
-    console.log(!(user === null))
-    return !(user === null)
+    let user = sessionStorage.getItem('user');
+    console.log(!(user === null));
+    return !(user === null);
   }
   logOut() {
-    sessionStorage.removeItem('username')
+    sessionStorage.removeItem('user');
   }
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
   authenticate(credentials, callback) {
-    console.log("authenticate: ");
+    console.log('authenticate: ');
     console.log(credentials);
 
         const headers = new HttpHeaders(credentials ? {
@@ -43,6 +43,6 @@ export class AuthenticationService {
     }
     test() {
       this.http.get<String>('http://localhost:8080/home/ho').subscribe(() => {
-        console.log("asd"); });
+        console.log('asd'); });
       }
 }
