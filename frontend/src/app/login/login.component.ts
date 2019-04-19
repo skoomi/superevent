@@ -15,7 +15,6 @@ export class LoginComponent {
   }
 
   login() {
-    console.log(this.credentials);
     this.authenticationService.authenticate(this.credentials, () => {
         this.router.navigateByUrl('/');
     });

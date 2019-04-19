@@ -20,15 +20,19 @@ export class AuthenticationService {
   }
 
   authenticate(credentials, callback) {
-    console.log("authenticate: " + credentials);
+    console.log("authenticate: ");
+    console.log(credentials);
+
         const headers = new HttpHeaders(credentials ? {
             authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
         } : {});
 
         this.http.get('http://localhost:8080/login', {headers: headers}).subscribe(response => {
+          console.log(response);
           console.log(response['authorities']);
             if (response['name']) {
-                sessionStorage.setItem('username', response['name'])
+                sessionStorage.setItem('user', response['name']);
+                sessionStorage.setItem('role', response['authorities']);
                 // this.authenticated = true;
             } else {
                 // this.authenticated = false;
