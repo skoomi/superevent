@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AuthenticationService } from './authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,17 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
-  greeting = {};
-  constructor(private http: HttpClient) {
-    //http.get('resource').subscribe(data => this.greeting = data);
+  private successfullyLoggedAlert = false;
+  constructor(private authenticationService: AuthenticationService) { }
+
+  ngOnInit() {
+    console.log("home ngoninit");
+    this.authenticationService.getLoginAlert().subscribe(showAlert => {
+    console.log("testngoninit");
+    console.log(this.successfullyLoggedAlert);
+    console.log(showAlert); 
+    this.successfullyLoggedAlert = showAlert;
+    console.log(this.successfullyLoggedAlert);});
+
   }
 }

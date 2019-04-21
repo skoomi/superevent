@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -12,14 +11,16 @@ import { EventsComponent } from './events/events.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import { AuthenticationService } from './authentication.service';
-import { AuthGuardService } from './auth-guard.service';
+import { AuthGuardService } from './authguard.service';
+import { LogoutComponent } from './logout/logout.component';
 
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home'},
   { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'events', component: EventsComponent, canActivate:[AuthGuardService]},
+  { path: 'logout', component: LogoutComponent},
+  { path: 'events', component: EventsComponent, canActivate:[AuthGuardService]}
 ];
 
 
@@ -29,7 +30,8 @@ const routes: Routes = [
     LoginComponent,
     NavbarComponent,
     HomeComponent,
-    EventsComponent
+    EventsComponent,
+    LogoutComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

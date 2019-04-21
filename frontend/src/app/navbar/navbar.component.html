@@ -17,7 +17,8 @@
       </form>
       <ul class="navbar-nav">
           <li class="nav-item">
-          <a class="nav-link navbar-nav" routerLinkActive="active" routerLink="/login" >Login</a>
+          <a class="nav-link navbar-nav" *ngIf="!authenticationService.isUserLoggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
+          <a class="nav-link navbar-nav" *ngIf="authenticationService.isUserLoggedIn()" routerLink="/logout" routerLinkActive="active">Log out</a>
         </li>
         
       </ul>
