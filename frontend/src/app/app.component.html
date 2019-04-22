@@ -1,8 +1,11 @@
 <div class="container">
   <app-navbar></app-navbar>
 </div>
-<div class="container alert alert-success pl-10" role="alert" *ngIf="successfullyLoggedAlert">
-  This is!
+<div class="container alert alert-success pl-10" role="alert" *ngIf="showLoggedInAlert()">
+  Zostałeś poprawnie zalogowany
+</div>
+<div class="container alert alert-warning pl-10" role="alert" *ngIf="showLoggedOutAlert()">
+  Zostałeś poprawnie wylogowany
 </div>
 <div class="container">
   <router-outlet></router-outlet>

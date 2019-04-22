@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class AuthenticationService {
 
-  succesfullLoginAlert = false;
   private loginAlert = new Subject<boolean>();
+  private logoutAlert = new Subject<boolean>();
 
   isUserLoggedIn() {
     let user = sessionStorage.getItem('user');
@@ -25,8 +25,7 @@ export class AuthenticationService {
   }
 
   authenticate(credentials, callback) {
-    this.succesfullLoginAlert = true;
-    this.loginAlert.next(this.succesfullLoginAlert);
+
     const headers = new HttpHeaders(credentials ? {
         authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     } : {});
@@ -36,6 +35,7 @@ export class AuthenticationService {
             sessionStorage.setItem('user', response['name']);
             sessionStorage.setItem('role', response['authorities']);
             // this.authenticated = true;
+
         } else {
             // this.authenticated = false;
         }
@@ -43,7 +43,17 @@ export class AuthenticationService {
     });
   }
 
-  getLoginAlert(): Observable<boolean>{
+  getLoginAlert(): Observable<boolean> {
     return this.loginAlert.asObservable();
+  }
+  getLogoutAlert(): Observable<boolean> {
+    return this.logoutAlert.asObservable();
+  }
+  setLoginAlert() {
+    this.loginAlert.next(true);
+  }
+
+  setLogoutAlert() {
+    this.logoutAlert.next(true);
   }
 }

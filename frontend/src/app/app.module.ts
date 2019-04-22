@@ -13,6 +13,7 @@ import {MatTableModule} from '@angular/material/table';
 import { AuthenticationService } from './authentication.service';
 import { AuthGuardService } from './authguard.service';
 import { LogoutComponent } from './logout/logout.component';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'logout', component: LogoutComponent},
-  { path: 'events', component: EventsComponent, canActivate:[AuthGuardService]}
+  { path: 'events', component: EventsComponent, canActivate:[AuthGuardService]},
+  { path: 'access-denied', component: AccessDeniedComponent}
 ];
 
 
@@ -31,7 +33,8 @@ const routes: Routes = [
     NavbarComponent,
     HomeComponent,
     EventsComponent,
-    LogoutComponent
+    LogoutComponent,
+    AccessDeniedComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

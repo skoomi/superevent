@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service';
+import { Router, NavigationStart } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +9,34 @@ import { AuthenticationService } from './authentication.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  private successfullyLoggedAlert = false;
-  constructor(private authenticationService: AuthenticationService) { }
+  private loggedInAlert = false;
+  private loggedOutAlert = false;
+
+  constructor(private authenticationService: AuthenticationService, private router: Router) {
+    router.events.pipe(
+      filter(event => event instanceof NavigationStart)
+    ).subscribe((event: NavigationStart) => {
+      this.loggedOutAlert = false;
+      this.loggedInAlert = false;
+      console.log('NavigationStart');
+    });
+   }
 
   ngOnInit() {
-    console.log("home ngoninit");
     this.authenticationService.getLoginAlert().subscribe(showAlert => {
-    console.log("testngoninit");
-    console.log(this.successfullyLoggedAlert);
-    console.log(showAlert); 
-    this.successfullyLoggedAlert = showAlert;
-    console.log(this.successfullyLoggedAlert);});
+      this.loggedInAlert = showAlert;
+      });
+    this.authenticationService.getLogoutAlert().subscribe(showAlert => {
+      this.loggedOutAlert = showAlert;
+      console.log('loggedOutAlert');
 
+      });
+  }
+
+  public showLoggedInAlert() {
+    return this.loggedInAlert;
+  }
+  public showLoggedOutAlert() {
+    return this.loggedOutAlert;
   }
 }

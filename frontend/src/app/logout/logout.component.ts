@@ -12,11 +12,12 @@ export class LogoutComponent implements OnInit {
   constructor(
     private authentocationService: AuthenticationService,
     private router: Router) {
+      this.authentocationService.logOut();
+      this.router.navigate(['home']);
+      this.authentocationService.setLogoutAlert();
   }
-
   ngOnInit() {
-    this.authentocationService.logOut();
-    this.router.navigate(['home']);
+
   }
 
 }
