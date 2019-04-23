@@ -18,7 +18,9 @@ export class AuthenticationService {
   }
 
   logOut() {
-    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('role');
+    sessionStorage.removeItem('basicauth');
   }
 
   constructor(private http: HttpClient, private router: Router) {
@@ -36,7 +38,6 @@ export class AuthenticationService {
             sessionStorage.setItem('basicauth', authString);
             sessionStorage.setItem('username', response['name']);
             sessionStorage.setItem('role', response['authorities']);
-            // this.authenticated = true;
 
         } else {
             // this.authenticated = false;
@@ -48,9 +49,11 @@ export class AuthenticationService {
   getLoginAlert(): Observable<boolean> {
     return this.loginAlert.asObservable();
   }
+
   getLogoutAlert(): Observable<boolean> {
     return this.logoutAlert.asObservable();
   }
+
   setLoginAlert() {
     this.loginAlert.next(true);
   }
