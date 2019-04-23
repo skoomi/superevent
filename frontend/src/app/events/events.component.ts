@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MyEvent } from '../model/myevent';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-events',
@@ -11,14 +12,16 @@ export class EventsComponent implements OnInit {
 
   events: MyEvent[] = [{id: 0, name: 'Kurs Java SE - Podstawy', price: 1234, startDate: new Date('12-03-2019'), endDate: new Date('12-04-2019'), lessons: 12, timetable: "pn,sr,czw 8:00 - 17:00", description: 'Opis musi byc', shortDescription: 'Krótki opis kursu, informacje ogólne,', imgPath: 'assets/img/java-logo.jpg'},
                       {id: 1, name: 'Kurs Java SE - Zaawansowany', price: 5678, startDate: new Date('06-05-2019'), endDate: new Date('06-07-2019'), lessons: 28, timetable: "pn,sr,czw 8:00 - 17:00", description: 'Opis musi byc', shortDescription: 'Krótki opis kursu drugiego, informacje ogólne,', imgPath: 'https://4.imimg.com/data4/JH/GT/GLADMIN-10326294/wp-content-uploads-2015-11-advance-java-affy-250x250.jpg'}];
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
 
   isFull(): boolean{
-
     return true;
   }
 
+  getEvents() {
+    this.http.get<Array<MyEvent>>('http://localhost:8080/events').subscribe((response) => {this.events = response;});
+  }
 }

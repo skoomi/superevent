@@ -13,7 +13,7 @@ export class AuthenticationService {
   private logoutAlert = new Subject<boolean>();
 
   isUserLoggedIn() {
-    let user = sessionStorage.getItem('user');
+    let user = sessionStorage.getItem('username');
     return !(user === null);
   }
 
@@ -32,7 +32,9 @@ export class AuthenticationService {
 
     this.http.get('http://localhost:8080/login', {headers: headers}).subscribe(response => {
         if (response['name']) {
-            sessionStorage.setItem('user', response['name']);
+            let authString = 'Basic ' + btoa(credentials.username + ':' + credentials.password);
+            sessionStorage.setItem('basicauth', authString);
+            sessionStorage.setItem('username', response['name']);
             sessionStorage.setItem('role', response['authorities']);
             // this.authenticated = true;
 

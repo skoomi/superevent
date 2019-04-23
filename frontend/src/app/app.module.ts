@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { Routes, RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { EventsComponent } from './events/events.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -14,6 +14,7 @@ import { AuthenticationService } from './authentication.service';
 import { AuthGuardService } from './authguard.service';
 import { LogoutComponent } from './logout/logout.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import { BasicAuthHtppInterceptorService } from './basic-auth-htpp-interceptor.service';
 
 
 const routes: Routes = [
@@ -44,7 +45,9 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MatTableModule
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, {  
+    provide:HTTP_INTERCEPTORS, useClass:BasicAuthHtppInterceptorService, multi:true 
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
