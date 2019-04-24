@@ -24,7 +24,7 @@ public class EventController {
         this.myEventService = myEventService;
     }
 
-    // private List<MyEvent> events = hardcodeList();
+    private List<MyEvent> hardcodedTestEvents = hardcodeList();
 
     @GetMapping
 	public List<MyEvent> getAllEvents() {
@@ -34,6 +34,11 @@ public class EventController {
     @PostMapping
     public MyEvent addEvent(@RequestBody MyEvent myEvent) {
 		return myEventService.addEvent(myEvent);
+    }
+    
+    @PostMapping("secret")
+    public void addHardcodedTestEvents(@RequestBody String str) {
+		myEventService.addEvents(hardcodedTestEvents);
     }
 
     private static List<MyEvent> hardcodeList() {

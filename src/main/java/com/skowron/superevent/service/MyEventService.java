@@ -25,4 +25,7 @@ public class MyEventService {
     public MyEvent addEvent(MyEvent myEvent) {
         return myEventRepository.save(myEvent);
     }
+    public void addEvents(List<MyEvent> myEventList) {
+        myEventRepository.saveAll(myEventList);
+    }
 }

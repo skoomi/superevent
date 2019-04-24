@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.OPTIONS, "/index.html", "/", "/home", "/login").permitAll()
         .anyRequest().authenticated().and()
         .formLogin()
-            .loginPage("/login");
+            .loginPage("/login"); //.and().csrf().disable();
         
     }
 
