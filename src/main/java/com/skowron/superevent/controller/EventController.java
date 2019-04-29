@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/events")
+@RequestMapping("/api")
 public class EventController {
 
     @Autowired
@@ -26,17 +26,17 @@ public class EventController {
 
     private List<MyEvent> hardcodedTestEvents = hardcodeList();
 
-    @GetMapping
-	public List<MyEvent> getAllEvents() {
+    @GetMapping("/events")
+	  public List<MyEvent> getAllEvents() {
 		return myEventService.getAllEvents();
     }
 
-    @PostMapping
+    @PostMapping("/events")
     public MyEvent addEvent(@RequestBody MyEvent myEvent) {
 		return myEventService.addEvent(myEvent);
     }
     
-    @PostMapping("secret")
+    @PostMapping("/secret")
     public void addHardcodedTestEvents(@RequestBody String str) {
 		myEventService.addEvents(hardcodedTestEvents);
     }

@@ -5,11 +5,11 @@
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="/home">Home</a>
         </li>
-        
+
         <li class="nav-item">
             <a class="nav-link" routerLinkActive="active" routerLink="/events">Events</a>
         </li>
-        
+
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -18,9 +18,10 @@
       <ul class="navbar-nav">
           <li class="nav-item">
           <a class="nav-link navbar-nav" *ngIf="!authenticationService.isUserLoggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
-          <a class="nav-link navbar-nav" *ngIf="authenticationService.isUserLoggedIn()" routerLink="/logout" routerLinkActive="active">Log out</a>
+          <button class="btn btn-link nav-link" *ngIf="authenticationService.isUserLoggedIn()" (click)="logout()">Log out</button>
+          <!-- <a class="nav-link navbar-nav" *ngIf="authenticationService.isUserLoggedIn()" routerLink="/logout" routerLinkActive="active">Log out</a> -->
         </li>
-        
+
       </ul>
     </div>
   </div>

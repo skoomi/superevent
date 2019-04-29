@@ -15,10 +15,12 @@ export class NavbarComponent implements OnInit {
     // this.loginService.authenticate(undefined, undefined);
   }
   logout() {
-    this.http.post('logout', {}).pipe(finalize(() => {
-        // this.authenticationService.authenticated = false;
-        this.router.navigateByUrl('/login');
-    })).subscribe();
+    console.log("logout test");
+    this.authenticationService.logOut();
+    // this.http.post('logout', {}).pipe(finalize(() => {
+    //     // this.authenticationService.authenticated = false;
+    //     this.router.navigateByUrl('/login');
+    // })).subscribe();
   }
 
   ngOnInit() {

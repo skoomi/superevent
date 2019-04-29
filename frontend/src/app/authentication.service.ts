@@ -18,9 +18,11 @@ export class AuthenticationService {
   }
 
   logOut() {
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('role');
-    sessionStorage.removeItem('basicauth');
+    this.http.post('http://localhost:4200/logout', {}).subscribe( res => {
+      sessionStorage.removeItem('username');
+      sessionStorage.removeItem('role');
+      sessionStorage.removeItem('basicauth');
+    });
   }
 
   constructor(private http: HttpClient, private router: Router) {
@@ -32,7 +34,7 @@ export class AuthenticationService {
         authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     } : {});
 
-    this.http.get('http://localhost:8080/login', {headers: headers}).subscribe(response => {
+    this.http.get('http://localhost:4200/api/login', {headers: headers}).subscribe(response => {
         if (response['name']) {
             let authString = 'Basic ' + btoa(credentials.username + ':' + credentials.password);
             sessionStorage.setItem('basicauth', authString);
