@@ -10,18 +10,17 @@ import { HomeComponent } from './home/home.component';
 import { EventsComponent } from './events/events.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
-import { AuthenticationService } from './authentication.service';
-import { AuthGuardService } from './authguard.service';
-import { LogoutComponent } from './logout/logout.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
-import { BasicAuthHtppInterceptorService } from './basic-auth-htpp-interceptor.service';
+import { BasicAuthHtppInterceptorService } from './services/basic-auth-htpp-interceptor.service';
+import { XhrInterceptorService } from './services/xhr-interceptor.service';
+import { AuthenticationService } from './services/authentication.service';
+import { XSRFInterceptorService } from './services/xsrfinterceptor.service';
 
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home'},
   { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'logout', component: LogoutComponent},
   { path: 'events', component: EventsComponent},// canActivate:[AuthGuardService]},
   { path: 'access-denied', component: AccessDeniedComponent}
 ];
@@ -34,7 +33,6 @@ const routes: Routes = [
     NavbarComponent,
     HomeComponent,
     EventsComponent,
-    LogoutComponent,
     AccessDeniedComponent
   ],
   imports: [
@@ -45,9 +43,19 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MatTableModule
   ],
-  providers: [AuthenticationService, {
-    provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true
-  }],
+  providers: [
+    AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: XhrInterceptorService, multi: true
+    }
+    ,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: XSRFInterceptorService, multi: true
+    }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

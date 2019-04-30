@@ -9,6 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class AuthenticationService {
 
+  constructor(private http: HttpClient, private router: Router) {
+  }
+
   private loginAlert = new Subject<boolean>();
   private logoutAlert = new Subject<boolean>();
 
@@ -18,18 +21,17 @@ export class AuthenticationService {
   }
 
   logOut() {
-    this.http.post('http://localhost:4200/logout', {}).subscribe( res => {
+    this.http.post('http://localhost:4200/api/logout', {}).subscribe( res => {
       sessionStorage.removeItem('username');
       sessionStorage.removeItem('role');
       sessionStorage.removeItem('basicauth');
     });
   }
 
-  constructor(private http: HttpClient, private router: Router) {
-  }
+
 
   authenticate(credentials, callback) {
-
+  console.log("authenticate");
     const headers = new HttpHeaders(credentials ? {
         authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     } : {});

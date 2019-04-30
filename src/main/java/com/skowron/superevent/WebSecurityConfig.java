@@ -27,19 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().httpBasic().and()
         .authorizeRequests()
-        .antMatchers(HttpMethod.OPTIONS, "/home", "/api/login", "/api/logout", "/api/logout2").permitAll()
+        .antMatchers("/home", "/api/login", "/api/logout").permitAll()
         .anyRequest().authenticated().and()
-        .logout().permitAll().logoutSuccessHandler(new LogoutSuccessHandler() {
-            
+        .logout().permitAll().logoutUrl("/api/logout").logoutSuccessHandler(new LogoutSuccessHandler() {
             @Override
             public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                     Authentication authentication) throws IOException, ServletException {
-                System.out.println("W koncu sie udalo?");
                 response.addHeader("logoutStatus", "success");
             }
-        }).and()
-        // .logout().invalidateHttpSession(true).clearAuthentication(true).deleteCookies("JSESSIONID").logoutUrl("/api/logout")
-        // .logoutSuccessUrl("/api/logout2").and()
+        }).invalidateHttpSession(true).clearAuthentication(true).deleteCookies("JSESSIONID").and()
         // .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         .csrf().disable();
     }

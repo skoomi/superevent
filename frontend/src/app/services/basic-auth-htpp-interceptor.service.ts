@@ -6,9 +6,10 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpXsrfTokenExtractor } fro
 })
 export class BasicAuthHtppInterceptorService implements HttpInterceptor{
 
-  constructor(private tokenExtractor: HttpXsrfTokenExtractor) { }
+  constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
+    console.log('BasicAuthHtppInterceptorService called');
 
     // if (sessionStorage.getItem('username') && sessionStorage.getItem('basicauth')) {
     //   req = req.clone({
@@ -17,16 +18,6 @@ export class BasicAuthHtppInterceptorService implements HttpInterceptor{
     //     }
     //   })
     // }
-    let requestMethod: string = req.method;
-    requestMethod = requestMethod.toLowerCase();
-    if (requestMethod && (requestMethod === 'post' || requestMethod === 'delete' || requestMethod === 'put' )) {
-      const headerName = 'X-XSRF-TOKEN';
-      let token = this.tokenExtractor.getToken() as string;
-      console.log(token);
-      if (token !== null && !req.headers.has(headerName)) {
-        req = req.clone({ headers: req.headers.set(headerName, token) });
-      }
-   }
 
     return next.handle(req);
 

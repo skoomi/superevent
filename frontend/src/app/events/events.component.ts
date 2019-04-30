@@ -17,7 +17,6 @@ export class EventsComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    console.log("ngOnInit events");
     this.http.get<Array<MyEvent>>('http://localhost:4200/api/events').subscribe((response) => {
       this.events = response;});
   }
@@ -29,8 +28,6 @@ export class EventsComponent implements OnInit {
   addMyEvent(newMyEvent: MyEvent) {
     this.http.post<MyEvent>('http://localhost:4200/api/events', newMyEvent).subscribe();
   }
-
-
 
   addTestEvents() {this.http.post<MyEvent>('http://localhost:4200/api/events/secret',"asd").subscribe();
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './services/authentication.service';
 import { Router, NavigationStart } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -18,7 +18,6 @@ export class AppComponent {
     ).subscribe((event: NavigationStart) => {
       this.loggedOutAlert = false;
       this.loggedInAlert = false;
-      console.log('NavigationStart');
     });
    }
 
@@ -28,8 +27,6 @@ export class AppComponent {
       });
     this.authenticationService.getLogoutAlert().subscribe(showAlert => {
       this.loggedOutAlert = showAlert;
-      console.log('loggedOutAlert');
-
       });
   }
 
