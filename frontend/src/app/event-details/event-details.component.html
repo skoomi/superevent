@@ -1,0 +1,21 @@
+<div *ngIf="event">
+  <br>
+  <div class="row">
+    <div class="col-2"><img src="{{event.imgPath}}"></div>
+    <div class="col-5">
+      <h4>{{event.name}}</h4>
+      <b>Cena:</b> {{event.price}} zł
+      <br><b>Termin:</b><!-- {{event.startDate | date:'shortDate'}} do {{event.endDate | date:'shortDate'}} -->
+      <br><b>Zajęcia:</b> {{event.lessons}}
+      <br><b>Godziny:</b> {{event.timetable}}
+    </div>
+    <div class="col-5">
+      {{event.shortDescription}}
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    {{event.description}}
+  </div>
+
+</div>

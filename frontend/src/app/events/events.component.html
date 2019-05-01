@@ -1,28 +1,38 @@
 <div class="m-4">
   <div class="row">
     <h4>
-      Aktualne kursy <button class="btn btn btn-success" (click)="addTestEvents()">Top secrete</button>
+      {{ !detailedView ? "Aktualne kursy" : "Szczegóły kursu" }} <button *ngIf="detailedView" type="button" class="btn btn-secondary btn-sm mr-3" (click)="showList()">Wróć do listy</button>
     </h4>
   </div>
   <div class="row">
 
     <div class="col-9">
-      <div class="row eventrow border-bottom mr-2" *ngFor="let event of events">
-          <div class="col-2"><img src="{{event.imgPath}}"></div>
-          <div class="col-5">
-            <h4>{{event.name}}</h4>
-            <b>Cena:</b> {{event.price}} zł
-            <br><b>Termin:</b><!-- {{event.startDate | date:'shortDate'}} do {{event.endDate | date:'shortDate'}} -->
-            <br><b>Zajęcia:</b> {{event.lessons}}
-            <br><b>Godziny:</b> {{event.timetable}}
-            <br><button type="button" class="btn btn-success mr-1">Zapisz się </button>
-            <button type="button" class="btn btn-light mr-4">Więcej</button>
-            <span *ngIf="isFull()" class="badge badge-pill badge-danger"> Brak miejsc!</span>
-          </div>
-          <div class="col-5">
-              {{event.shortDescription}}
-          </div>
-      </div>
+      <ng-container *ngIf="!detailedView">
+        <div class="row eventrow border-bottom mr-2" *ngFor="let event of events">
+            <div class="col-2"><img src="{{event.imgPath}}"></div>
+            <div class="col-5">
+              <h4>{{event.name}}</h4>
+              <b>Cena:</b> {{event.price}} zł
+              <br><b>Termin:</b><!-- {{event.startDate | date:'shortDate'}} do {{event.endDate | date:'shortDate'}} -->
+              <br><b>Zajęcia:</b> {{event.lessons}}
+              <br><b>Godziny:</b> {{event.timetable}}
+              <br>
+              <!-- <br><button type="button" class="btn btn-success mr-1">Zapisz się </button> -->
+              <button type="button" class="btn btn-light btn-sm mr-3" (click)="showDetails(event)">Więcej</button>
+              <span *ngIf="isFull()" class="badge badge-pill badge-danger mr-3"> Brak miejsc!</span>
+              <button type="button" class="btn btn-success mr-1 btn-sm" (click)="editEvent(event)">Edytuj</button>
+              <button type="button" class="btn btn-success btn-sm" (click)="deleteEvent(event)">Usuń</button>
+
+            </div>
+            <div class="col-5">
+                {{event.shortDescription}}
+            </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="detailedView">
+        <app-event-details [event]="selectedEvent"></app-event-details>
+      </ng-container>
     </div>
 
     <div class="col-3 border-left">

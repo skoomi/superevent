@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().httpBasic().and()
         .authorizeRequests()
         .antMatchers("/home", "/api/login", "/api/logout").permitAll()
+        .antMatchers(HttpMethod.GET, "/api/events").permitAll()
         .anyRequest().authenticated().and()
         .logout().permitAll().logoutUrl("/api/logout").logoutSuccessHandler(new LogoutSuccessHandler() {
             @Override

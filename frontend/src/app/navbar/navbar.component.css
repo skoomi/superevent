@@ -2,6 +2,9 @@ body {
   font-size: .875rem;
 }
 
+.active {
+ background-color: #eeeeee;
+}
 /*
  * Navbar
  */

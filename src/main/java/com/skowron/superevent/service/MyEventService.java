@@ -28,4 +28,7 @@ public class MyEventService {
     public void addEvents(List<MyEvent> myEventList) {
         myEventRepository.saveAll(myEventList);
     }
+    public void removeEvent(Long id) {
+        myEventRepository.deleteById(id);;
+    }
 }
