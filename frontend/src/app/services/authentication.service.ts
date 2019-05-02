@@ -14,6 +14,7 @@ export class AuthenticationService {
 
   private loginAlert = new Subject<boolean>();
   private logoutAlert = new Subject<boolean>();
+  private userLoggedIn = new Subject<boolean>();
 
   isUserLoggedIn() {
     let user = sessionStorage.getItem('username');
@@ -42,6 +43,7 @@ export class AuthenticationService {
             sessionStorage.setItem('basicauth', authString);
             sessionStorage.setItem('username', response['name']);
             sessionStorage.setItem('role', response['authorities']);
+            this.setLoginAlert();
 
         } else {
             // this.authenticated = false;
@@ -64,5 +66,13 @@ export class AuthenticationService {
 
   setLogoutAlert() {
     this.logoutAlert.next(true);
+  }
+
+  setUserLoggedIn() {
+    this.userLoggedIn.next(true);
+  }
+
+  getUserLoggedIn() {
+    return this.userLoggedIn.asObservable();
   }
 }

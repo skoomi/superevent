@@ -1,7 +1,10 @@
 <div class="m-4">
   <div class="row">
     <h4>
-      {{ !detailedView ? "Aktualne kursy" : "Szczegóły kursu" }} <button *ngIf="detailedView" type="button" class="btn btn-secondary btn-sm mr-3" (click)="showList()">Wróć do listy</button>
+      {{ !detailedView ? "Aktualne kursy" : "Szczegóły kursu" }} 
+      <button *ngIf="detailedView" type="button" class="btn btn-outline-success btn-sm mr-3" (click)="signIn()">Zapisz się</button>
+
+      <button *ngIf="detailedView" type="button" class="btn btn-outline-secondary btn-sm mr-3" (click)="showList()">Wróć do listy</button>
     </h4>
   </div>
   <div class="row">
@@ -15,7 +18,7 @@
               <b>Cena:</b> {{event.price}} zł
               <br><b>Termin:</b><!-- {{event.startDate | date:'shortDate'}} do {{event.endDate | date:'shortDate'}} -->
               <br><b>Zajęcia:</b> {{event.lessons}}
-              <br><b>Godziny:</b> {{event.timetable}}
+              <br><b>Godziny:</b> {{event.timetable}} {{event.imgPath}}
               <br>
               <!-- <br><button type="button" class="btn btn-success mr-1">Zapisz się </button> -->
               <button type="button" class="btn btn-light btn-sm mr-3" (click)="showDetails(event)">Więcej</button>

@@ -17,7 +17,7 @@ export class LoginComponent {
   login() {
     this.authenticationService.authenticate(this.credentials, () => {
         this.router.navigateByUrl('/');
-        this.authenticationService.setLoginAlert();
+        // this.authenticationService.setLoginAlert();
     });
     return false;
   }
