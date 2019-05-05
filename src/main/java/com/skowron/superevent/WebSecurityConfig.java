@@ -9,10 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.authentication.AuthenticationManagerBeanDefinitionParser;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -24,11 +28,22 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        UserBuilder users = User.withDefaultPasswordEncoder();
+        auth.inMemoryAuthentication()
+            .withUser(users.username("user").password("user").roles("USER"))
+            .withUser(users.username("emp").password("emp").roles("USER", "EMPLOYEE"))
+            .withUser(users.username("admin").password("admin").roles("USER", "EMPLOYEE", "ADMIN"));
+            
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().httpBasic().and()
         .authorizeRequests()
         .antMatchers("/home", "/api/login", "/api/logout").permitAll()
         .antMatchers(HttpMethod.GET, "/api/events").permitAll()
+        .antMatchers(HttpMethod.POST, "/api/events").hasAnyRole("EMPLOYEE", "ADMIN")
         .anyRequest().authenticated().and()
         .logout().permitAll().logoutUrl("/api/logout").logoutSuccessHandler(new LogoutSuccessHandler() {
             @Override

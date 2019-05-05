@@ -1,9 +1,9 @@
 <div class="m-4">
   <div class="row">
     <h4>
-      {{ !detailedView ? "Aktualne kursy" : "Szczegóły kursu" }} 
-      <button *ngIf="detailedView" type="button" class="btn btn-outline-success btn-sm mr-3" (click)="signIn()">Zapisz się</button>
-
+      {{ !detailedView ? "Aktualne kursy" : "Szczegóły kursu" }}
+      <button *ngIf="showWhenLoggedAs(userRole) && detailedView" type="button" class="btn btn-outline-success btn-sm mr-3" (click)="signIn()">Zapisz się</button>
+      <button *ngIf="showWhenLoggedAs(employeeRole)" type="button" class="btn btn-outline-success btn-sm mr-3" (click)="createEvent()">Dodaj nowy event</button>
       <button *ngIf="detailedView" type="button" class="btn btn-outline-secondary btn-sm mr-3" (click)="showList()">Wróć do listy</button>
     </h4>
   </div>
@@ -18,13 +18,13 @@
               <b>Cena:</b> {{event.price}} zł
               <br><b>Termin:</b><!-- {{event.startDate | date:'shortDate'}} do {{event.endDate | date:'shortDate'}} -->
               <br><b>Zajęcia:</b> {{event.lessons}}
-              <br><b>Godziny:</b> {{event.timetable}} {{event.imgPath}}
+              <br><b>Godziny:</b> {{event.timetable}}
               <br>
               <!-- <br><button type="button" class="btn btn-success mr-1">Zapisz się </button> -->
               <button type="button" class="btn btn-light btn-sm mr-3" (click)="showDetails(event)">Więcej</button>
               <span *ngIf="isFull()" class="badge badge-pill badge-danger mr-3"> Brak miejsc!</span>
-              <button type="button" class="btn btn-success mr-1 btn-sm" (click)="editEvent(event)">Edytuj</button>
-              <button type="button" class="btn btn-success btn-sm" (click)="deleteEvent(event)">Usuń</button>
+              <button *ngIf="showWhenLoggedAs(employeeRole)" type="button" class="btn btn-success mr-1 btn-sm" (click)="editEvent(event)">Edytuj</button>
+              <button *ngIf="showWhenLoggedAs(employeeRole)" type="button" class="btn btn-success btn-sm" (click)="deleteEvent(event)">Usuń</button>
 
             </div>
             <div class="col-5">

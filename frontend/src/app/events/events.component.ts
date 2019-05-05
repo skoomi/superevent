@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MyEvent } from '../model/myevent';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { EventsSerivce } from '../services/events.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
+import { Roles } from '../model/roles.enum';
+import { MatDialog } from '@angular/material';
+import { NewEventDialogComponent } from '../new-event-dialog/new-event-dialog.component';
+
+
 
 @Component({
   selector: 'app-events',
@@ -13,41 +16,65 @@ import { Router } from '@angular/router';
   styleUrls: ['./events.component.css'],
 })
 export class EventsComponent implements OnInit {
+  employeeRole = Roles.EMPLOYEE;
+  userRole = Roles.USER;
 
   selectedEvent: MyEvent;
   detailedView: boolean;
 
   events: MyEvent[];
-  // = [{id: 0, name: 'Kurs Java SE - Podstawy', price: 1234, startDate: new Date('12-03-2019'),endDate: new Date('12-04-2019'), lessons: 12, timetable: "pn,sr,czw 8:00 - 17:00", description: 'Opis musi byc', shortDescription: 'Krótki opis kursu, informacje ogólne,', imgPath: 'assets/img/java-logo.jpg'},
-  // {id: 1, name: 'Kurs Java SE - Zaawansowany', price: 5678, startDate: new Date('06-05-2019'), endDate: new Date('06-07-2019'), lessons: 28, timetable: "pn,sr,czw 8:00 - 17:00", description: 'Opis musi byc', shortDescription: 'Krótki opis kursu drugiego, informacje ogólne,', imgPath: 'https://4.imimg.com/data4/JH/GT/GLADMIN-10326294/wp-content-uploads-2015-11-advance-java-affy-250x250.jpg'}];
-  constructor(private http: HttpClient, private eventsService: EventsSerivce, private authenticationService: AuthenticationService, private router: Router) { }
+
+  constructor(private http: HttpClient,
+              private eventsService: EventsSerivce,
+              private authenticationService: AuthenticationService,
+              private router: Router,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.http.get<Array<MyEvent>>('http://localhost:4200/api/events').subscribe((response) => {
-      this.events = response;});
-    
+    this.eventsService.getEvents().subscribe((response) => {
+      this.events = response; });
+  }
+
+  public showSignInButton() {
+    return this.authenticationService.hasRole(Roles.USER) && this.detailedView;
+  }
+  public showWhenLoggedAs(role: Roles) {
+    return this.authenticationService.hasRole(role);
+  }
+  public showCreateEventButton() {
+    return this.authenticationService.hasRole(Roles.EMPLOYEE);
+  }
+  public showEditButton() {
+    return this.authenticationService.hasRole(Roles.EMPLOYEE)
+  }
+  public showDeleteButton() {
+    return this.authenticationService.hasRole(Roles.EMPLOYEE)
   }
 
   isFull(): boolean{
     return true;
   }
 
-  addMyEvent(newMyEvent: MyEvent) {
-    this.http.post<MyEvent>('http://localhost:4200/api/events', newMyEvent).subscribe();
-  }
-
-  addTestEvents() {this.http.post<MyEvent>('http://localhost:4200/api/events/secret',"asd").subscribe();
-
-  }
-
   signIn() {
     if (this.authenticationService.isUserLoggedIn()) {
       //sign
-    }
-    else {
+    } else {
       this.router.navigateByUrl('/login')
     }
   }
+
+  public createEvent() {
+    const dialogRef = this.dialog.open(NewEventDialogComponent, {
+      width: '900px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
   showDetails(event: MyEvent) {
     this.selectedEvent = event;
     this.detailedView = true;
@@ -60,6 +87,7 @@ export class EventsComponent implements OnInit {
   public editEvent(event: MyEvent) {
 
   }
+
   public deleteEvent(event: MyEvent) {
     this.eventsService.deleteEvent(event.id);
   }

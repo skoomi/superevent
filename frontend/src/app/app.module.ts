@@ -18,6 +18,8 @@ import { XSRFInterceptorService } from './services/xsrfinterceptor.service';
 import { AuthGuardService } from './services/authguard.service';
 import { EventDetailsComponent } from './event-details/event-details.component';
 import { EventsSerivce } from './services/events.service';
+import { NewEventDialogComponent } from './new-event-dialog/new-event-dialog.component';
+import { MaterialModule } from './material';
 
 
 const routes: Routes = [
@@ -37,7 +39,8 @@ const routes: Routes = [
     HomeComponent,
     EventsComponent,
     AccessDeniedComponent,
-    EventDetailsComponent
+    EventDetailsComponent,
+    NewEventDialogComponent
   ],
   imports: [
     RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
@@ -45,7 +48,7 @@ const routes: Routes = [
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatTableModule
+    MaterialModule
   ],
   providers: [
     AuthenticationService,
@@ -55,11 +58,13 @@ const routes: Routes = [
     },
     {
       provide: HTTP_INTERCEPTORS, useClass: XhrInterceptorService, multi: true
-    }
-    ,
+    },
     {
       provide: HTTP_INTERCEPTORS, useClass: XSRFInterceptorService, multi: true
-    }
+    },
+],
+entryComponents: [
+  NewEventDialogComponent
 ],
   bootstrap: [AppComponent]
 })

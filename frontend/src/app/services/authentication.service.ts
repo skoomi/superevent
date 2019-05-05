@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs/internal/Subject';
 import { Observable } from 'rxjs';
+import { Roles } from '../model/roles.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,14 @@ export class AuthenticationService {
   private logoutAlert = new Subject<boolean>();
   private userLoggedIn = new Subject<boolean>();
 
+  hasRole(role: Roles) {
+    let roles = sessionStorage.getItem('roles');
+    if (roles !== null) {
+      return sessionStorage.getItem('roles').includes(role);
+    }
+    return false;
+  }
+
   isUserLoggedIn() {
     let user = sessionStorage.getItem('username');
     return !(user === null);
@@ -24,7 +33,7 @@ export class AuthenticationService {
   logOut() {
     this.http.post('http://localhost:4200/api/logout', {}).subscribe( res => {
       sessionStorage.removeItem('username');
-      sessionStorage.removeItem('role');
+      sessionStorage.removeItem('roles');
       sessionStorage.removeItem('basicauth');
     });
   }
@@ -42,7 +51,7 @@ export class AuthenticationService {
             let authString = 'Basic ' + btoa(credentials.username + ':' + credentials.password);
             sessionStorage.setItem('basicauth', authString);
             sessionStorage.setItem('username', response['name']);
-            sessionStorage.setItem('role', response['authorities']);
+            sessionStorage.setItem('roles', JSON.stringify(response['authorities']));
             this.setLoginAlert();
 
         } else {

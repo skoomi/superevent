@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Dodaj nowy event</h1>
+<div mat-dialog-content>
+  <div class="dialog-container">
+    <mat-form-field class="col-4">
+      <input matInput placeholder="Nazwa" [(ngModel)]="newEvent.name">
+    </mat-form-field>
+    <mat-form-field class="col-2">
+      <input matInput placeholder="Cena" [(ngModel)]="newEvent.price">
+    </mat-form-field>
+    <mat-form-field class="col-4">
+      <input matInput placeholder="Zajęcia" [(ngModel)]="newEvent.lessons">
+    </mat-form-field>
+    <mat-form-field class="col-4">
+      <input matInput placeholder="Godziny" [(ngModel)]="newEvent.timetable">
+    </mat-form-field>
+    <mat-form-field class="col-6">
+      <input matInput placeholder="Miniaturka" [(ngModel)]="newEvent.imgPath">
+    </mat-form-field>
+    <mat-form-field class="col-12">
+      <textarea matInput placeholder="Opis na liście" [(ngModel)]="newEvent.shortDescription"></textarea>
+    </mat-form-field>
+    <mat-form-field class="col-12">
+      <textarea matInput placeholder="Opis szczegółowy" [(ngModel)]="newEvent.description"></textarea>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="addEvent()" [mat-dialog-close]>Dodaj</button>
+</div>

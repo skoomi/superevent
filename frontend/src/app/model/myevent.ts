@@ -1,6 +1,6 @@
 export interface MyEvent{
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
   price?: number;
   // startDate?: Date;
   // endDate?: Date;
