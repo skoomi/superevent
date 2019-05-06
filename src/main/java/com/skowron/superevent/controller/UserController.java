@@ -1,6 +1,7 @@
 package com.skowron.superevent.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import com.skowron.superevent.model.User;
 import com.skowron.superevent.service.UserService;
@@ -20,10 +21,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // @GetMapping("/user")
-	// public Principal user(Principal user) {
-	// 	return user;
-    // }
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
 
     @PostMapping("/users")
 	public void addUser(@RequestBody User user) throws Exception {

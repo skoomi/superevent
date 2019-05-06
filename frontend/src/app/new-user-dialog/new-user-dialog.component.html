@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Dodaj nowego użytkownika</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+      <input matInput placeholder="Nazwa" [(ngModel)]="newUser.userName">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Hasło" [(ngModel)]="newUser.password">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Roles" [(ngModel)]="rolesString">
+    </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="addEvent()">Dodaj</button>
+</div>

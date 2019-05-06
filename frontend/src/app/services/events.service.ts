@@ -22,7 +22,6 @@ export class EventsSerivce {
   }
 
   public deleteEvent(id: number) {
-
     this.http.delete(`http://localhost:4200/api/events/${id}`).subscribe();
   }
 }
