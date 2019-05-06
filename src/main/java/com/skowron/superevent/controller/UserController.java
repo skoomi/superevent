@@ -27,7 +27,7 @@ public class UserController {
 
     @PostMapping("/users")
 	public void addUser(@RequestBody User user) throws Exception {
-
+        System.out.println(user.getPassword());
         User existing = userService.findByUserName(user.getUserName());
         if (existing != null){
             throw new Exception("User already exists");

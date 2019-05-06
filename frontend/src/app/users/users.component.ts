@@ -10,7 +10,7 @@ import { Roles } from '../model/roles.enum';
 })
 export class UsersComponent implements OnInit {
 
-  newUser: MyUser = {userName: 'testowy', password: 'test', roles: [Roles.USER, Roles.EMPLOYEE]};
+  newUser: MyUser = {userName: 'zxc', password: 'zxc', roles: [Roles.USER, Roles.EMPLOYEE]};
   constructor(private userService: UserService) { }
 
   ngOnInit() {

@@ -46,7 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //     .withUser(users.username("user").password("user").roles("USER"))
         //     .withUser(users.username("emp").password("emp").roles("USER", "EMPLOYEE"))
         //     .withUser(users.username("admin").password("admin").roles("USER", "EMPLOYEE", "ADMIN"));
-            auth.jdbcAuthentication().dataSource(dataSource);
+            // auth.jdbcAuthentication().dataSource(dataSource);
+            auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
@@ -73,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(12);
     }
 
     @Bean

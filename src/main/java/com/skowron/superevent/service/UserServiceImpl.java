@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import com.skowron.superevent.dao.UserRepository;
 import com.skowron.superevent.model.Role;
 import com.skowron.superevent.model.User;
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-    // need to inject user dao
+
     @Autowired
     private UserRepository userRepository;
 
@@ -26,26 +28,24 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    // @Transactional
+    @Transactional
     public User findByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
 
     @Override
-    // @Transactional
+    @Transactional
     public void save(User user) {
         User newUser = new User();
-        // assign user details to the user object
         newUser.setUserName(user.getUserName());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        newUser.setRoles(user.getRoles());
 
-        // give user default role of "employee"
-        newUser.setRoles(Arrays.asList(new Role("ROLE_USER")));
-        // save user in the database
         userRepository.save(newUser);
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userRepository.findByUserName(userName);
         if (user == null) {
