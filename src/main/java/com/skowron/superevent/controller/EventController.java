@@ -31,12 +31,12 @@ public class EventController {
 
     @GetMapping("/events")
 	  public List<MyEvent> getAllEvents() {
-		return myEventService.getAllEvents();
+		  return myEventService.getAllEvents();
     }
 
     @PostMapping("/events")
     public MyEvent addEvent(@RequestBody MyEvent myEvent) {
-		return myEventService.addEvent(myEvent);
+		  return myEventService.addEvent(myEvent);
     }
 
     @PutMapping("/events/{id}")

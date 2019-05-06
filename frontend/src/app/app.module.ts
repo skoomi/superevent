@@ -21,6 +21,7 @@ import { EventsSerivce } from './services/events.service';
 import { NewEventDialogComponent } from './new-event-dialog/new-event-dialog.component';
 import { MaterialModule } from './material';
 import { EditEventDialogComponent } from './edit-event-dialog/edit-event-dialog.component';
+import { UsersComponent } from './users/users.component';
 
 
 const routes: Routes = [
@@ -28,7 +29,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'events', component: EventsComponent},// canActivate:[AuthGuardService]},
-  { path: 'access-denied', component: AccessDeniedComponent}
+  { path: 'access-denied', component: AccessDeniedComponent},
+  { path: 'users', component: UsersComponent}
 ];
 
 
@@ -42,7 +44,8 @@ const routes: Routes = [
     AccessDeniedComponent,
     EventDetailsComponent,
     NewEventDialogComponent,
-    EditEventDialogComponent
+    EditEventDialogComponent,
+    UsersComponent
   ],
   imports: [
     RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
