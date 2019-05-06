@@ -17,6 +17,10 @@ export class EventsSerivce {
     return this.http.post<MyEvent>(`http://localhost:4200/api/events`, event);
   }
 
+  public updateEvent(event: MyEvent) {
+    return this.http.put<MyEvent>(`http://localhost:4200/api/events/${event.id}`, event);
+  }
+
   public deleteEvent(id: number) {
 
     this.http.delete(`http://localhost:4200/api/events/${id}`).subscribe();

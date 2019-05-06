@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Edycja</h1>
+<div mat-dialog-content>
+  <div class="dialog-container">
+    <mat-form-field class="col-4">
+      <input matInput placeholder="Nazwa" [(ngModel)]="event.name">
+    </mat-form-field>
+    <mat-form-field class="col-2">
+      <input matInput placeholder="Cena" [(ngModel)]="event.price">
+    </mat-form-field>
+    <mat-form-field class="col-4">
+      <input matInput placeholder="Zajęcia" [(ngModel)]="event.lessons">
+    </mat-form-field>
+    <mat-form-field class="col-4">
+      <input matInput placeholder="Godziny" [(ngModel)]="event.timetable">
+    </mat-form-field>
+    <mat-form-field class="col-6">
+      <input matInput placeholder="Miniaturka" [(ngModel)]="event.imgPath">
+    </mat-form-field>
+    <mat-form-field class="col-12">
+      <textarea matInput placeholder="Opis na liście" [(ngModel)]="event.shortDescription"></textarea>
+    </mat-form-field>
+    <mat-form-field class="col-12">
+      <textarea matInput placeholder="Opis szczegółowy" [(ngModel)]="event.description"></textarea>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="editEvent()" [mat-dialog-close]>Zapisz</button>
+</div>

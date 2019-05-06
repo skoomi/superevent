@@ -5,7 +5,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,6 +19,7 @@ import org.springframework.security.config.authentication.AuthenticationManagerB
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -27,14 +30,17 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private DataSource dataSource;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        UserBuilder users = User.withDefaultPasswordEncoder();
-        auth.inMemoryAuthentication()
-            .withUser(users.username("user").password("user").roles("USER"))
-            .withUser(users.username("emp").password("emp").roles("USER", "EMPLOYEE"))
-            .withUser(users.username("admin").password("admin").roles("USER", "EMPLOYEE", "ADMIN"));
-            
+        // UserBuilder users = User.withDefaultPasswordEncoder();
+        // auth.inMemoryAuthentication()
+        //     .withUser(users.username("user").password("user").roles("USER"))
+        //     .withUser(users.username("emp").password("emp").roles("USER", "EMPLOYEE"))
+        //     .withUser(users.username("admin").password("admin").roles("USER", "EMPLOYEE", "ADMIN"));
+            auth.jdbcAuthentication().dataSource(dataSource);
     }
 
     @Override
@@ -44,6 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/home", "/api/login", "/api/logout").permitAll()
         .antMatchers(HttpMethod.GET, "/api/events").permitAll()
         .antMatchers(HttpMethod.POST, "/api/events").hasAnyRole("EMPLOYEE", "ADMIN")
+        .antMatchers(HttpMethod.PUT, "/api/events/**").hasAnyRole("EMPLOYEE", "ADMIN")
+        .antMatchers(HttpMethod.DELETE, "/api/events/**").hasAnyRole("EMPLOYEE", "ADMIN")
         .anyRequest().authenticated().and()
         .logout().permitAll().logoutUrl("/api/logout").logoutSuccessHandler(new LogoutSuccessHandler() {
             @Override
@@ -55,6 +63,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         .csrf().disable();
     }
+
+    // @Bean
+    // public BCryptPasswordEncoder passwordEncoder() {
+    //     return new BCryptPasswordEncoder();
+    // }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {

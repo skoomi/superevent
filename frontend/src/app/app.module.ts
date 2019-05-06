@@ -20,6 +20,7 @@ import { EventDetailsComponent } from './event-details/event-details.component';
 import { EventsSerivce } from './services/events.service';
 import { NewEventDialogComponent } from './new-event-dialog/new-event-dialog.component';
 import { MaterialModule } from './material';
+import { EditEventDialogComponent } from './edit-event-dialog/edit-event-dialog.component';
 
 
 const routes: Routes = [
@@ -40,7 +41,8 @@ const routes: Routes = [
     EventsComponent,
     AccessDeniedComponent,
     EventDetailsComponent,
-    NewEventDialogComponent
+    NewEventDialogComponent,
+    EditEventDialogComponent
   ],
   imports: [
     RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
@@ -64,7 +66,8 @@ const routes: Routes = [
     },
 ],
 entryComponents: [
-  NewEventDialogComponent
+  NewEventDialogComponent,
+  EditEventDialogComponent
 ],
   bootstrap: [AppComponent]
 })

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Roles } from '../model/roles.enum';
 import { MatDialog } from '@angular/material';
 import { NewEventDialogComponent } from '../new-event-dialog/new-event-dialog.component';
+import { EditEventDialogComponent } from '../edit-event-dialog/edit-event-dialog.component';
 
 
 
@@ -16,8 +17,6 @@ import { NewEventDialogComponent } from '../new-event-dialog/new-event-dialog.co
   styleUrls: ['./events.component.css'],
 })
 export class EventsComponent implements OnInit {
-  employeeRole = Roles.EMPLOYEE;
-  userRole = Roles.USER;
 
   selectedEvent: MyEvent;
   detailedView: boolean;
@@ -26,7 +25,7 @@ export class EventsComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private eventsService: EventsSerivce,
-              private authenticationService: AuthenticationService,
+              public auth: AuthenticationService,
               private router: Router,
               public dialog: MatDialog) { }
 
@@ -35,20 +34,8 @@ export class EventsComponent implements OnInit {
       this.events = response; });
   }
 
-  public showSignInButton() {
-    return this.authenticationService.hasRole(Roles.USER) && this.detailedView;
-  }
   public showWhenLoggedAs(role: Roles) {
-    return this.authenticationService.hasRole(role);
-  }
-  public showCreateEventButton() {
-    return this.authenticationService.hasRole(Roles.EMPLOYEE);
-  }
-  public showEditButton() {
-    return this.authenticationService.hasRole(Roles.EMPLOYEE)
-  }
-  public showDeleteButton() {
-    return this.authenticationService.hasRole(Roles.EMPLOYEE)
+    return this.auth.userHasRole(role);
   }
 
   isFull(): boolean{
@@ -56,7 +43,7 @@ export class EventsComponent implements OnInit {
   }
 
   signIn() {
-    if (this.authenticationService.isUserLoggedIn()) {
+    if (this.auth.isUserLoggedIn()) {
       //sign
     } else {
       this.router.navigateByUrl('/login')
@@ -75,6 +62,23 @@ export class EventsComponent implements OnInit {
     });
   }
 
+  public editEvent(event: MyEvent) {
+    const dialogRef = this.dialog.open(EditEventDialogComponent, {
+      width: '900px',
+       data: {id: event.id, name: event.name, price: event.price, description: event.description,
+        shortDescription: event.shortDescription, lessons: event.lessons, timetable: event.timetable, imgPath: event.imgPath}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
+  public deleteEvent(event: MyEvent) {
+    this.eventsService.deleteEvent(event.id);
+  }
+
   showDetails(event: MyEvent) {
     this.selectedEvent = event;
     this.detailedView = true;
@@ -84,11 +88,5 @@ export class EventsComponent implements OnInit {
     this.detailedView = false;
   }
 
-  public editEvent(event: MyEvent) {
 
-  }
-
-  public deleteEvent(event: MyEvent) {
-    this.eventsService.deleteEvent(event.id);
-  }
 }

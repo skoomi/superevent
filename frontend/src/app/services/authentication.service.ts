@@ -9,6 +9,9 @@ import { Roles } from '../model/roles.enum';
   providedIn: 'root'
 })
 export class AuthenticationService {
+  employeeRole = Roles.EMPLOYEE;
+  userRole = Roles.USER;
+  adminRole = Roles.ADMIN;
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -17,7 +20,7 @@ export class AuthenticationService {
   private logoutAlert = new Subject<boolean>();
   private userLoggedIn = new Subject<boolean>();
 
-  hasRole(role: Roles) {
+  userHasRole(role: Roles) {
     let roles = sessionStorage.getItem('roles');
     if (roles !== null) {
       return sessionStorage.getItem('roles').includes(role);
@@ -37,8 +40,6 @@ export class AuthenticationService {
       sessionStorage.removeItem('basicauth');
     });
   }
-
-
 
   authenticate(credentials, callback) {
   console.log("authenticate");
