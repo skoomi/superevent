@@ -20,6 +20,12 @@ public class User {
 	inverseJoinColumns = @JoinColumn(name = "role"))
     private List<Role> roles;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinTable(name = "users_events", 
+	joinColumns = @JoinColumn(name = "user"), 
+	inverseJoinColumns = @JoinColumn(name = "event"))
+    private List<MyEvent> events;
+
     public User() {
 	}
 

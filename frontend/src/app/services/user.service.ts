@@ -15,7 +15,7 @@ export class UserService {
   public addUser(user: MyUser) {
     return this.http.post<MyUser>(`http://localhost:4200/api/users`, user);
   }
-  public deleteEvent(id: number) {
+  public deleteEvent(id: string) {
     this.http.delete(`http://localhost:4200/api/users/${id}`).subscribe();
   }
 }

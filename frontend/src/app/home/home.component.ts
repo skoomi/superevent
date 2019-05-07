@@ -12,9 +12,9 @@ import { UserService } from '../services/user.service';
 })
 export class HomeComponent implements OnInit {
 
-  user: MyUser = {userName: 'user', password: 'user', roles: ['Role_USER']};
-  emp: MyUser = {userName: 'emp', password: 'emp', roles: ['Role_USER', 'Role_EMPLOYEE']};
-  admin: MyUser = {userName: 'admin', password: 'admin', roles: ['Role_USER', 'Role_EMPLOYEE', 'Role_AMIN']};
+  user: MyUser = {userName: 'user', password: 'user', roles: [{roleName: 'Role_USER'}]};
+  emp: MyUser = {userName: 'emp', password: 'emp', roles: [{roleName: 'Role_USER'}, {roleName: 'Role_EMPLOYEE'}]};
+  admin: MyUser = {userName: 'admin', password: 'admin', roles: [{roleName: 'Role_USER'}, {roleName: 'Role_EMPLOYEE'}, {roleName: 'Role_AMIN'}]};
   constructor(private userService: UserService) { }
 
   ngOnInit() {

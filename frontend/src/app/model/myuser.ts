@@ -1,5 +1,9 @@
+import { MyEvent } from './myevent';
+import { Role } from './role';
+
 export interface MyUser {
   userName?: string;
   password?: string;
-  roles?: string[];
+  roles?: Role[];
+  events?: MyEvent[];
 }

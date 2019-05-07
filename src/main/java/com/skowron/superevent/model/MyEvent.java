@@ -1,24 +1,44 @@
 package com.skowron.superevent.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "event")
 public class MyEvent {
 
     @Id
+    @Column(name = "id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name")
     private String name;
-    
+
+    @Column(name = "price")
     private double price;
+
+    @Column(name = "lessons")
     private int lessons;
+
+    @Column(name = "timetable")
     private String timetable;
+
+    @Column(name = "short_description")
     private String shortDescription;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "imgPath")
     private String imgPath;
+
+
+
     /**
      * @return the id
      */
