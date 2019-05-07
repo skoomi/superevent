@@ -4,7 +4,6 @@ import { MyEvent } from '../model/myevent';
 import { HttpClient } from '@angular/common/http';
 import { MyUser } from '../model/myuser';
 import { UserService } from '../services/user.service';
-import { Roles } from '../model/roles.enum';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +12,9 @@ import { Roles } from '../model/roles.enum';
 })
 export class HomeComponent implements OnInit {
 
-  user: MyUser = {userName: 'user', password: 'user', roles: [Roles.USER]};
-  emp: MyUser = {userName: 'emp', password: 'emp', roles: [Roles.USER, Roles.EMPLOYEE]};
-  admin: MyUser = {userName: 'admin', password: 'admin', roles: [Roles.USER, Roles.EMPLOYEE, Roles.ADMIN]};
+  user: MyUser = {userName: 'user', password: 'user', roles: ['Role_USER']};
+  emp: MyUser = {userName: 'emp', password: 'emp', roles: ['Role_USER', 'Role_EMPLOYEE']};
+  admin: MyUser = {userName: 'admin', password: 'admin', roles: ['Role_USER', 'Role_EMPLOYEE', 'Role_AMIN']};
   constructor(private userService: UserService) { }
 
   ngOnInit() {

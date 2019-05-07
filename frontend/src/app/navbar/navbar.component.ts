@@ -12,6 +12,7 @@ import { AuthenticationService } from '../services/authentication.service';
 export class NavbarComponent implements OnInit {
 
   constructor(public auth: AuthenticationService, private http: HttpClient, private router: Router) {
+    console.log(auth.adminRole);
     // this.loginService.authenticate(undefined, undefined);
   }
   logout() {

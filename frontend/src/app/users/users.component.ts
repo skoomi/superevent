@@ -1,7 +1,6 @@
 import { UserService } from './../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MyUser } from '../model/myuser';
-import { Roles } from '../model/roles.enum';
 import { MatDialog } from '@angular/material';
 import { NewUserDialogComponent } from '../new-user-dialog/new-user-dialog.component';
 
@@ -34,7 +33,7 @@ export class UsersComponent implements OnInit {
   }
 
   public deleteUser(user: MyUser) {
-    this.userService.deleteEvent(user.id);
+    this.userService.deleteEvent(user.userName);
   }
 
 }

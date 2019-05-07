@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { EventsSerivce } from '../services/events.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
-import { Roles } from '../model/roles.enum';
 import { MatDialog } from '@angular/material';
 import { NewEventDialogComponent } from '../new-event-dialog/new-event-dialog.component';
 import { EditEventDialogComponent } from '../edit-event-dialog/edit-event-dialog.component';
@@ -34,7 +33,7 @@ export class EventsComponent implements OnInit {
       this.events = response; });
   }
 
-  public showWhenLoggedAs(role: Roles) {
+  public showWhenLoggedAs(role: string) {
     return this.auth.userHasRole(role);
   }
 

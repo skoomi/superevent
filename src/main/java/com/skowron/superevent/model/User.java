@@ -1,6 +1,6 @@
 package com.skowron.superevent.model;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.*;
 @Entity
@@ -8,21 +8,17 @@ import javax.persistence.*;
 public class User {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
-
-	@Column(name = "username")
+	@Column(name = "user_name")
 	private String userName;
 
 	@Column(name = "password")
 	private String password;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(name = "users_roles", 
-	joinColumns = @JoinColumn(name = "user_id"), 
-	inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+	joinColumns = @JoinColumn(name = "user"), 
+	inverseJoinColumns = @JoinColumn(name = "role"))
+    private List<Role> roles;
 
     public User() {
 	}
@@ -32,26 +28,12 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String userName, String password, Collection<Role> roles) {
+	public User(String userName, String password, List<Role> roles) {
 		this.userName = userName;
 		this.password = password;
 		this.roles = roles;
 	}
-
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    
     /**
      * @return the userName
      */
@@ -83,17 +65,16 @@ public class User {
     /**
      * @return the roles
      */
-    public Collection<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
     /**
      * @param roles the roles to set
      */
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
-    
-    
+
 
 }

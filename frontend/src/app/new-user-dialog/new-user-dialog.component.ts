@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MyUser } from '../model/myuser';
 import { MatDialogRef } from '@angular/material';
 import { UserService } from '../services/user.service';
-import { Roles } from '../model/roles.enum';
 
 @Component({
   selector: 'app-new-user-dialog',
@@ -12,7 +11,11 @@ import { Roles } from '../model/roles.enum';
 export class NewUserDialogComponent implements OnInit {
 
   newUser: MyUser = {};
-  rolesString: string;
+  roles: string[] = [];
+
+  user = true;
+  employee = false;
+  admin = false;
   constructor(public dialogRef: MatDialogRef<NewUserDialogComponent>, private userService: UserService) { }
 
   ngOnInit() {
@@ -23,9 +26,11 @@ export class NewUserDialogComponent implements OnInit {
   }
 
   addEvent() {
-    console.log(this.newUser);
-    console.log(this.rolesString);
-    this.newUser.roles[0] = Roles[this.rolesString];
-    // this.userService.addUser(this.newUser).subscribe();
+    this.roles.push('ROLE_USER');
+    if ( this.employee ) { this.roles.push('ROLE_EMPLOYEE'); }
+    if ( this.admin ) { this.roles.push('ROLE_ADMIN'); }
+    this.newUser.roles = this.roles;
+
+    this.userService.addUser(this.newUser).subscribe();
   }
 }

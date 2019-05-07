@@ -3,15 +3,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs/internal/Subject';
 import { Observable } from 'rxjs';
-import { Roles } from '../model/roles.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  employeeRole = Roles.EMPLOYEE;
-  userRole = Roles.USER;
-  adminRole = Roles.ADMIN;
+  readonly employeeRole = 'ROLE_EMPLOYEE';
+  readonly userRole = 'ROLE_USER';
+  readonly adminRole = 'ROLE_ADMIN';
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -20,10 +19,10 @@ export class AuthenticationService {
   private logoutAlert = new Subject<boolean>();
   private userLoggedIn = new Subject<boolean>();
 
-  userHasRole(role: Roles) {
+  userHasRole(role: string) {
     let roles = sessionStorage.getItem('roles');
     if (roles !== null) {
-      return sessionStorage.getItem('roles').includes(role);
+      return roles.includes(role);
     }
     return false;
   }

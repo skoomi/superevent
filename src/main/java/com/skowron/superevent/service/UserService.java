@@ -9,5 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService {
     User findByUserName(String userName);
     void save(User user);
-	List<User> getAllUsers();
+    List<User> getAllUsers();
+    void removeUser(String userName);
 }

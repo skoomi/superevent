@@ -6,12 +6,18 @@
     <mat-form-field>
       <input matInput type="password" placeholder="Hasło" [(ngModel)]="newUser.password">
     </mat-form-field>
-    <mat-form-field>
+
+    <section class="example-section">
+      <mat-checkbox class="margin" disabled [(ngModel)]="user">USER</mat-checkbox>
+      <mat-checkbox class="margin" [(ngModel)]="employee">EMPLOYEE</mat-checkbox>
+      <mat-checkbox class="margin" [(ngModel)]="admin">ADMIN</mat-checkbox>
+    </section>
+    <!-- <mat-form-field>
       <input matInput placeholder="Roles" [(ngModel)]="rolesString">
-    </mat-form-field>
+    </mat-form-field> -->
 
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Anuluj</button>
-  <button mat-button (click)="addEvent()">Dodaj</button>
+  <button mat-button (click)="addEvent()" [mat-dialog-close]>Dodaj</button>
 </div>

@@ -11,7 +11,7 @@
         </li>
         <!-- <li class="nav-item" *ngIf="auth.userHasRole(auth.adminRole)"> -->
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/users">Użytkownicy</a>
+          <a class="nav-link" *ngIf="auth.userHasRole(auth.adminRole)" routerLinkActive="active" routerLink="/users">Użytkownicy</a>
         </li>
 
       </ul>

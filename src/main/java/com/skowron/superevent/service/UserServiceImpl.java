@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         newUser.setUserName(user.getUserName());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setRoles(user.getRoles());
-
+System.out.println("before save");
         userRepository.save(newUser);
     }
 
@@ -57,13 +57,21 @@ public class UserServiceImpl implements UserService {
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
     }
 
     @Override
     public List<User> getAllUsers() {
+
         return userRepository.findAll();
     }
+
+    @Override
+    public void removeUser(String userName) {
+        User user = userRepository.findByUserName(userName);
+        userRepository.delete(user);
+    }
+    
 
 
 }

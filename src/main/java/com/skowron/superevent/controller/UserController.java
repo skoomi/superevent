@@ -8,7 +8,9 @@ import com.skowron.superevent.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,12 +30,16 @@ public class UserController {
 
     @PostMapping("/users")
 	public void addUser(@RequestBody User user) throws Exception {
-        System.out.println(user.getPassword());
         User existing = userService.findByUserName(user.getUserName());
         if (existing != null){
             throw new Exception("User already exists");
         }
         userService.save(user);
+    }
+
+    @DeleteMapping("/users/{userName}")
+    public void removeUser(@PathVariable String userName) {
+	    userService.removeUser(userName);
     }
     
 }
