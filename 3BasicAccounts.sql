@@ -7,10 +7,10 @@ DROP TABLE IF EXISTS  `superevent`.`role`;
 DROP TABLE IF EXISTS  `superevent`.`event`;
 
 CREATE TABLE `user` (
-
+`id` INT NOT NULL AUTO_INCREMENT,
 `user_name` varchar(50) NOT NULL,
 `password` varchar(80) NOT NULL,
-PRIMARY KEY (`user_name`)
+PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `role` (
@@ -21,12 +21,12 @@ PRIMARY KEY (`role_name`)
 
 CREATE TABLE `users_roles` (
 
-`user` varchar(45) NOT NULL,
+`user` INT NOT NULL,
 `role` varchar(45) NOT NULL,
 
 PRIMARY KEY (`user`,`role`),
 
-CONSTRAINT `FK_USER` FOREIGN KEY (`user`) REFERENCES `user` (`user_name`),
+CONSTRAINT `FK_USER` FOREIGN KEY (`user`) REFERENCES `user` (`id`),
 CONSTRAINT `FK_ROLE` FOREIGN KEY (`role`) REFERENCES `role` (`role_name`)
 );
 
@@ -40,15 +40,15 @@ CREATE TABLE `event` (
   `description` VARCHAR(1000) NULL,
   `img_path` VARCHAR(200) NULL,
   PRIMARY KEY (`id`)
-  );
+);
   
-  CREATE TABLE `users_events` (
-`user` varchar(45) NOT NULL,
+CREATE TABLE `users_events` (
+`user` INT NOT NULL,
 `event` INT NOT NULL,
 
 PRIMARY KEY (`user`,`event`),
 
-CONSTRAINT `FK_USER_EVENT` FOREIGN KEY (`user`) REFERENCES `user` (`user_name`),
+CONSTRAINT `FK_USER_EVENT` FOREIGN KEY (`user`) REFERENCES `user` (`id`),
 CONSTRAINT `FK_EVENT_USER` FOREIGN KEY (`event`) REFERENCES `event` (`id`)
   );
 
@@ -64,13 +64,13 @@ INSERT INTO user (user_name, password) VALUES
 ('admin','$2a$12$4IKzG8nZ/rkOSFkF.d/AF.33qfc/q/0R/jZDz8zdzpzKsvzxiL7KC');
 
 INSERT INTO users_roles (user, role) VALUES
-('user','ROLE_USER'),
-('user2','ROLE_USER'),
-('emp','ROLE_EMPLOYEE'),
-('emp','ROLE_USER'),
-('admin','ROLE_EMPLOYEE'),
-('admin','ROLE_USER'),
-('admin','ROLE_ADMIN');
+(1,'ROLE_USER'),
+(2,'ROLE_USER'),
+(3,'ROLE_EMPLOYEE'),
+(3,'ROLE_USER'),
+(4,'ROLE_EMPLOYEE'),
+(4,'ROLE_USER'),
+(4,'ROLE_ADMIN');
 
 INSERT INTO event (name, price, lessons, timetable, short_description, description, img_path) VALUES
 ('Kurs Java - zaawansowany', 3999, 24, 'PN-PT, 8-16', 'Krótki opis musi być', 'Długi opis nie musi być ale jest długi', 'assets/img/java-logo.jpg'),
@@ -78,6 +78,6 @@ INSERT INTO event (name, price, lessons, timetable, short_description, descripti
 ('Kurs nie wiadomo czego', 999.99, 5, 'WT 10-15, PT 10-15', 'Krotki opis nie wiadomo czego', 'Długi opis nie musi być ale niech będzie i to długi', 'assets/img/java-logo.jpg');
 
 INSERT INTO users_events (user, event) VALUES
-('user', 1),
-('user2', 1),
-('user2', 3);
+(1, 1),
+(2, 1),
+(2, 3);

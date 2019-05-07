@@ -3,6 +3,7 @@ package com.skowron.superevent.service;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -66,10 +67,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeUser(String userName) {
-        User user = userRepository.findByUserName(userName);
-        userRepository.delete(user);
+    public void removeUser(Long id) {
+        // User user = userRepository.findByUserName(id);
+        userRepository.deleteById(id);
     }
+
+    @Override
+    public User updateUser(Long id, User user) {
+        User userToUpdate = userRepository.getOne(id);
+        Long tempId = userToUpdate.getId();
+        userToUpdate = user;
+        return userRepository.save(userToUpdate);
+    }
+    
     
 
 

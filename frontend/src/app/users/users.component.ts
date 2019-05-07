@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MyUser } from '../model/myuser';
 import { MatDialog } from '@angular/material';
 import { NewUserDialogComponent } from '../new-user-dialog/new-user-dialog.component';
+import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -11,6 +12,7 @@ import { NewUserDialogComponent } from '../new-user-dialog/new-user-dialog.compo
 })
 export class UsersComponent implements OnInit {
 
+  // users: MyUser[] = [{userName:'asd',password:'fgh',roles:[{roleName:'r1'},{roleName:'r2'}],events:[{name:'ev1'},{name:'ev2'}]}];
   users: MyUser[];
   constructor(private userService: UserService,
               public dialog: MatDialog) { }
@@ -32,8 +34,20 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  public editUser(user: MyUser) {
+    const dialogRef = this.dialog.open(EditUserDialogComponent, {
+      width: '400px',
+       data: {id: user.id, userName: user.userName, password: user.password, roles: user.roles}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
   public deleteUser(user: MyUser) {
-    this.userService.deleteEvent(user.userName);
+    this.userService.deleteUser(user.id).subscribe();
   }
 
 }

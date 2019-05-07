@@ -23,6 +23,7 @@ import { MaterialModule } from './material';
 import { EditEventDialogComponent } from './edit-event-dialog/edit-event-dialog.component';
 import { UsersComponent } from './users/users.component';
 import { NewUserDialogComponent } from './new-user-dialog/new-user-dialog.component';
+import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
 
 
 const routes: Routes = [
@@ -47,7 +48,8 @@ const routes: Routes = [
     NewEventDialogComponent,
     EditEventDialogComponent,
     UsersComponent,
-    NewUserDialogComponent
+    NewUserDialogComponent,
+    EditUserDialogComponent
   ],
   imports: [
     RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
@@ -73,7 +75,8 @@ const routes: Routes = [
 entryComponents: [
   NewEventDialogComponent,
   EditEventDialogComponent,
-  NewUserDialogComponent
+  NewUserDialogComponent,
+  EditUserDialogComponent
 ],
   bootstrap: [AppComponent]
 })

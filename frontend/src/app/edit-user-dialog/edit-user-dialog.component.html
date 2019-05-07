@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Edycja użytkownika</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+      <input matInput placeholder="Nazwa" [(ngModel)]="editUser.userName">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Hasło" [(ngModel)]="editUser.password">
+    </mat-form-field>
+
+    <section class="example-section">
+      <mat-checkbox class="margin" disabled [(ngModel)]="user">USER</mat-checkbox>
+      <mat-checkbox class="margin" [(ngModel)]="employee">EMPLOYEE</mat-checkbox>
+      <mat-checkbox class="margin" [(ngModel)]="admin">ADMIN</mat-checkbox>
+    </section>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="updateUser()" [mat-dialog-close]>Zapisz</button>
+</div>

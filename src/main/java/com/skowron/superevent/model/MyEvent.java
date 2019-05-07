@@ -37,8 +37,6 @@ public class MyEvent {
     @Column(name = "imgPath")
     private String imgPath;
 
-
-
     /**
      * @return the id
      */
