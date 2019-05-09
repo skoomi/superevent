@@ -75,19 +75,23 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User updateUser(String userName, User user) throws Exception {
-        User userToUpdate = userRepository.getOne(userName);
+        if ( userName.equals(user.getUserName())) {
+            System.out.println("userName == user.getUserName()");
 
-        System.out.println(userToUpdate.getUserName());
-        System.out.println(user.getUserName());
+            return userRepository.save(user);
+        }
+        else {
+            System.out.println("userName != user.getUserName()");
 
-        User existing = findByUserName(user.getUserName());
-        if (existing != null && existing.getUserName() != userName){
-            throw new Exception("User with given userName already exists!");
+            User existing = findByUserName(user.getUserName());
+            if (existing != null){
+                throw new Exception("User with given userName already exists!");
+            }
+            User oldUser = userRepository.getOne(userName);
+            userRepository.deleteByUserName(oldUser.getUserName());
+            return userRepository.save(user);
         }
 
-        userToUpdate = user;
-        userRepository.deleteByUserName(userName);
-        return userRepository.save(userToUpdate);
     }
     
     
