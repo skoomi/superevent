@@ -12,6 +12,9 @@ export class UserService {
   public getUsers() {
     return this.http.get<Array<MyUser>>(`http://localhost:4200/api/users`);
   }
+  public getUser(userName: string) {
+    return this.http.get<MyUser>(`http://localhost:4200/api/users/${userName}`);
+  }
   public addUser(user: MyUser) {
     return this.http.post<MyUser>(`http://localhost:4200/api/users`, user);
   }

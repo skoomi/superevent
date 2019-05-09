@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { NewEventDialogComponent } from '../new-event-dialog/new-event-dialog.component';
 import { EditEventDialogComponent } from '../edit-event-dialog/edit-event-dialog.component';
+import { UserService } from '../services/user.service';
 
 
 
@@ -24,6 +25,7 @@ export class EventsComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private eventsService: EventsSerivce,
+              private userService: UserService,
               public auth: AuthenticationService,
               private router: Router,
               public dialog: MatDialog) { }
@@ -47,7 +49,13 @@ export class EventsComponent implements OnInit {
 
   signIn() {
     if (this.auth.isUserLoggedIn()) {
-      //sign
+      var loggedUserName = this.auth.getLoggedUser();
+      this.userService.getUser(loggedUserName).subscribe( result => {
+        var loggedUser = result;
+        loggedUser.events.push(this.selectedEvent);
+        this.userService.updateUser(loggedUserName, loggedUser).subscribe();
+      });
+      
     } else {
       this.router.navigateByUrl('/login')
     }

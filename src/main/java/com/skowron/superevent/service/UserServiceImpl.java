@@ -77,8 +77,11 @@ public class UserServiceImpl implements UserService {
     public User updateUser(String userName, User user) throws Exception {
         User userToUpdate = userRepository.getOne(userName);
 
+        System.out.println(userToUpdate.getUserName());
+        System.out.println(user.getUserName());
+
         User existing = findByUserName(user.getUserName());
-        if (existing != null){
+        if (existing != null && existing.getUserName() != userName){
             throw new Exception("User with given userName already exists!");
         }
 

@@ -29,6 +29,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/users/{userName}")
+    public User getUser(@PathVariable String userName) {
+        return userService.findByUserName(userName);
+    }
+
     @PostMapping("/users")
 	public void addUser(@RequestBody User user) throws Exception {
         User existing = userService.findByUserName(user.getUserName());
