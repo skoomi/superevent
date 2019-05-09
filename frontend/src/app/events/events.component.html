@@ -23,8 +23,9 @@
               <!-- <br><button type="button" class="btn btn-success mr-1">Zapisz się </button> -->
               <button type="button" class="btn btn-light btn-sm mr-3" (click)="showDetails(event)">Więcej</button>
               <span *ngIf="isFull()" class="badge badge-pill badge-danger mr-3"> Brak miejsc!</span>
+              <span *ngIf="isActualUserSigned(event)" class="badge badge-pill badge-success mr-3"> Zapisany do kursu!</span>
               <button *ngIf="auth.userHasRole(auth.employeeRole)" type="button" class="btn btn-success mr-1 btn-sm" (click)="editEvent(event)">Edytuj</button>
-              <button *ngIf="auth.userHasRole(auth.userRole)" type="button" class="btn btn-success btn-sm" (click)="deleteEvent(event)">Usuń</button>
+              <button *ngIf="auth.userHasRole(auth.employeeRole)" type="button" class="btn btn-success btn-sm" (click)="deleteEvent(event)">Usuń</button>
 
             </div>
             <div class="col-5">

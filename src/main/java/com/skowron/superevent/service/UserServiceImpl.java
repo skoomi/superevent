@@ -67,16 +67,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeUser(Long id) {
+    public void deleteUser(String userName) {
         // User user = userRepository.findByUserName(id);
-        userRepository.deleteById(id);
+        userRepository.deleteByUserName(userName);
     }
 
     @Override
-    public User updateUser(Long id, User user) {
-        User userToUpdate = userRepository.getOne(id);
-        Long tempId = userToUpdate.getId();
+    @Transactional
+    public User updateUser(String userName, User user) throws Exception {
+        User userToUpdate = userRepository.getOne(userName);
+
+        User existing = findByUserName(user.getUserName());
+        if (existing != null){
+            throw new Exception("User with given userName already exists!");
+        }
+
         userToUpdate = user;
+        userRepository.deleteByUserName(userName);
         return userRepository.save(userToUpdate);
     }
     

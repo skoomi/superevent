@@ -41,6 +41,10 @@ export class EventsComponent implements OnInit {
     return true;
   }
 
+  isActualUserSigned(event: MyEvent) {
+    
+  }
+
   signIn() {
     if (this.auth.isUserLoggedIn()) {
       //sign

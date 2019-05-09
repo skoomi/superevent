@@ -11,7 +11,7 @@ import { Role } from '../model/role';
 })
 export class EditUserDialogComponent implements OnInit {
 
-  selectedUser: MyUser = {};
+  selectedUser:string;
   roles: Role[] = [];
 
   user = true;
@@ -21,6 +21,8 @@ export class EditUserDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<EditUserDialogComponent>,
               private userService: UserService,
               @Inject(MAT_DIALOG_DATA) public editUser: any) {
+                
+                this.selectedUser = editUser.userName;
                 editUser.roles.forEach(element => {
                   if (element.roleName === 'ROLE_EMPLOYEE') {this.employee = true; }
                   if (element.roleName === 'ROLE_ADMIN') {this.admin = true; }
@@ -40,6 +42,6 @@ export class EditUserDialogComponent implements OnInit {
     if ( this.employee ) { this.roles.push({roleName: 'ROLE_EMPLOYEE'}); }
     if ( this.admin ) { this.roles.push({roleName: 'ROLE_ADMIN'}); }
     this.editUser.roles = this.roles;
-    this.userService.updateUser(this.editUser.id, this.editUser).subscribe();
+    this.userService.updateUser(this.selectedUser, this.editUser).subscribe();
   }
 }

@@ -15,10 +15,10 @@ export class UserService {
   public addUser(user: MyUser) {
     return this.http.post<MyUser>(`http://localhost:4200/api/users`, user);
   }
-  public deleteUser(id: number) {
-    return this.http.delete(`http://localhost:4200/api/users/${id}`);
+  public deleteUser(userName: string) {
+    return this.http.delete(`http://localhost:4200/api/users/${userName}`);
   }
-  public updateUser(id: number, user: MyUser) {
-    return this.http.put<MyUser>(`http://localhost:4200/api/users/${id}`, user);
+  public updateUser(userName: string, user: MyUser) {
+    return this.http.put<MyUser>(`http://localhost:4200/api/users/${userName}`, user);
   }
 }

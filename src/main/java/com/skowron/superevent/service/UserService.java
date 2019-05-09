@@ -10,6 +10,6 @@ public interface UserService extends UserDetailsService {
     User findByUserName(String userName);
     void save(User user);
     List<User> getAllUsers();
-    void removeUser(Long id);
-    User updateUser(Long id, User user);
+    void deleteUser(String userName);
+    User updateUser(String userName, User user) throws Exception;
 }

@@ -37,6 +37,9 @@ public class MyEvent {
     @Column(name = "imgPath")
     private String imgPath;
 
+    @Column(name = "limit")
+    private int limit;
+
     /**
      * @return the id
      */
@@ -149,7 +152,19 @@ public class MyEvent {
         this.imgPath = imgPath;
     }
 
-    
+   /**
+     * @return the limit
+     */
+    public int getLimit() {
+        return limit;
+    }
+
+    /**
+     * @param lessons the lessons to set
+     */
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }   
     
 
 }

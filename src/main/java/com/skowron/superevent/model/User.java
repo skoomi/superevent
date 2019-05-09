@@ -8,23 +8,19 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @Column(name = "id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-
 	@Column(name = "user_name")
 	private String userName;
 
 	@Column(name = "password")
 	private String password;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(name = "users_roles", 
 	joinColumns = @JoinColumn(name = "user"), 
 	inverseJoinColumns = @JoinColumn(name = "role"))
     private List<Role> roles;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(name = "users_events", 
 	joinColumns = @JoinColumn(name = "user"), 
 	inverseJoinColumns = @JoinColumn(name = "event"))
@@ -33,33 +29,18 @@ public class User {
     public User() {
 	}
 
-	public User(Long id, String userName, String password) {
-		this.id = id;
+	public User(String userName, String password) {
 		this.userName = userName;
 		this.password = password;
 	}
 
-	public User(Long id, String userName, String password, List<Role> roles, List<MyEvent> events) {
-		this.id = id;
+	public User(String userName, String password, List<Role> roles, List<MyEvent> events) {
 		this.userName = userName;
 		this.password = password;
 		this.roles = roles;
 		this.events = events;
 	}
 
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     /**
      * @return the userName

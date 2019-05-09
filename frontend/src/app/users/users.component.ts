@@ -37,7 +37,7 @@ export class UsersComponent implements OnInit {
   public editUser(user: MyUser) {
     const dialogRef = this.dialog.open(EditUserDialogComponent, {
       width: '400px',
-       data: {id: user.id, userName: user.userName, password: user.password, roles: user.roles}
+       data: {userName: user.userName, password: user.password, roles: user.roles, events: user.events}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -47,7 +47,7 @@ export class UsersComponent implements OnInit {
   }
 
   public deleteUser(user: MyUser) {
-    this.userService.deleteUser(user.id).subscribe();
+    this.userService.deleteUser(user.userName).subscribe();
   }
 
 }

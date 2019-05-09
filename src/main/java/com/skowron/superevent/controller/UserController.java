@@ -38,14 +38,18 @@ public class UserController {
         userService.save(user);
     }
     
-    @PutMapping("/users/{id}")
-    public void updateEvent(@PathVariable Long id, @RequestBody User user) {
-	    userService.updateUser(id, user);
+    @PutMapping("/users/{userName}")
+    public void updateEvent(@PathVariable String userName, @RequestBody User user) {
+	    try {
+            userService.updateUser(userName, user);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
 
-    @DeleteMapping("/users/{id}")
-    public void removeUser(@PathVariable Long id) {
-	    userService.removeUser(id);
+    @DeleteMapping("/users/{userName}")
+    public void removeUser(@PathVariable String userName) {
+	    userService.deleteUser(userName);
     }
     
 }
