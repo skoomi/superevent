@@ -1,14 +1,16 @@
 package com.skowron.superevent.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+// ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "event")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "id")
 public class MyEvent {
 
     @Id
@@ -37,9 +39,16 @@ public class MyEvent {
     @Column(name = "imgPath")
     private String imgPath;
 
-    @Column(name = "limit")
-    private int limit;
+    @Column(name = "seats")
+    private int seats;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinTable(name = "users_events", 
+	joinColumns = @JoinColumn(name = "event"), 
+	inverseJoinColumns = @JoinColumn(name = "user"))
+    private List<User> users;
+
+    
     /**
      * @return the id
      */
@@ -153,18 +162,32 @@ public class MyEvent {
     }
 
    /**
-     * @return the limit
+     * @return the seats
      */
-    public int getLimit() {
-        return limit;
+    public int getSeats() {
+        return seats;
     }
 
     /**
-     * @param lessons the lessons to set
+     * @param seats the seats to set
      */
-    public void setLimit(int limit) {
-        this.limit = limit;
-    }   
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+
+    /**
+     * @return the users
+     */
+    public List<User> getUsers() {
+        return users;
+    }
+
+    /**
+     * @param users the users to set
+     */
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
     
 
 }
