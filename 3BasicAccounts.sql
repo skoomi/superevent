@@ -38,7 +38,7 @@ CREATE TABLE `event` (
   `short_description` VARCHAR(200) NOT NULL,
   `description` VARCHAR(1000) NULL,
   `img_path` VARCHAR(200) NULL,
-  `limit` INT NULL,
+  `seats` INT NULL,
   PRIMARY KEY (`id`)
 );
   
@@ -72,10 +72,10 @@ INSERT INTO users_roles (user, role) VALUES
 ('admin','ROLE_USER'),
 ('admin','ROLE_ADMIN');
 
-INSERT INTO event (name, price, lessons, timetable, short_description, description, img_path, `limit`) VALUES
+INSERT INTO event (name, price, lessons, timetable, short_description, description, img_path, `seats`) VALUES
 ('Kurs Java - zaawansowany', 3999, 24, 'PN-PT, 8-16', 'Krótki opis musi być', 'Długi opis nie musi być ale jest długi', 'assets/img/java-logo.jpg', 15),
 ('Kurs Java - podstawy', 2000, 12, 'PN-PT, 8-16', 'Krótki 2222 musi 2222', 'Długi opis nie 22222 być ale jest 22222', 'assets/img/java-logo.jpg', 25),
-('Kurs nie wiadomo czego', 999.99, 5, 'WT 10-15, PT 10-15', 'Krotki opis nie wiadomo czego', 'Długi opis nie musi być ale niech będzie i to długi', 'assets/img/java-logo.jpg', 5);
+('Kurs nie wiadomo czego', 999.99, 5, 'WT 10-15, PT 10-15', 'Krotki opis nie wiadomo czego', 'Długi opis nie musi być ale niech będzie i to długi', 'assets/img/java-logo.jpg', 1);
 
 INSERT INTO users_events (user, event) VALUES
 ('user', 1),

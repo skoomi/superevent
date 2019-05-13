@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs/internal/Subject';
 import { Observable } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthenticationService {
   readonly userRole = 'ROLE_USER';
   readonly adminRole = 'ROLE_ADMIN';
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private userService: UserService) {
   }
 
   private loginAlert = new Subject<boolean>();
@@ -26,9 +27,20 @@ export class AuthenticationService {
     }
     return false;
   }
-  
-  getLoggedUser() {
+
+  getLoggedUserUserName() {
     return sessionStorage.getItem('username');
+  }
+
+  getLoggedUser() {
+    let loggedUser;
+    let loggedUserUserName = this.getLoggedUserUserName();
+    if (loggedUserUserName != null) {
+      this.userService.getUser(loggedUserUserName).subscribe(result => {
+        loggedUser = result;
+      });
+    }
+    return loggedUser;
   }
 
   isUserLoggedIn() {

@@ -39,23 +39,27 @@ export class EventsComponent implements OnInit {
     return this.auth.userHasRole(role);
   }
 
-  isFull(): boolean{
-    return true;
+  isFull(event: MyEvent): boolean{
+    let isFull = false;
+    if (event.users.length >= event.seats) {
+      isFull = true;
+    }
+    return isFull;
   }
 
   isActualUserSigned(event: MyEvent) {
-    
+
   }
 
   signIn() {
     if (this.auth.isUserLoggedIn()) {
-      var loggedUserName = this.auth.getLoggedUser();
+      var loggedUserName = this.auth.getLoggedUserUserName();
       this.userService.getUser(loggedUserName).subscribe( result => {
         var loggedUser = result;
         loggedUser.events.push(this.selectedEvent);
         this.userService.updateUser(loggedUserName, loggedUser).subscribe();
       });
-      
+
     } else {
       this.router.navigateByUrl('/login')
     }

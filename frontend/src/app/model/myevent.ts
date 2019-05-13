@@ -1,3 +1,5 @@
+import { MyUser } from './myuser';
+
 export interface MyEvent{
   id?: number;
   name?: string;
@@ -9,4 +11,6 @@ export interface MyEvent{
   shortDescription?: string;
   description?: string;
   imgPath?: string;
+  seats?: number;
+  users?: MyUser[];
 }
