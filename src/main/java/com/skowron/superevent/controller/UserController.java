@@ -3,7 +3,8 @@ package com.skowron.superevent.controller;
 import java.security.Principal;
 import java.util.List;
 
-import com.skowron.superevent.model.User;
+import com.skowron.superevent.model.UserDto;
+import com.skowron.superevent.model.UserEntity;
 import com.skowron.superevent.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,26 +26,28 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/users/{userName}")
-    public User getUser(@PathVariable String userName) {
+    public UserDto getUser(@PathVariable String userName) {
         return userService.findByUserName(userName);
     }
 
     @PostMapping("/users")
-	public void addUser(@RequestBody User user) throws Exception {
-        User existing = userService.findByUserName(user.getUserName());
-        if (existing != null){
-            throw new Exception("User already exists");
+    public void addUser(@RequestBody UserDto user) {
+
+        try {
+            userService.save(user);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        userService.save(user);
     }
     
     @PutMapping("/users/{userName}")
-    public void updateEvent(@PathVariable String userName, @RequestBody User user) {
+    public void updateEvent(@PathVariable String userName, @RequestBody UserDto user) {
 	    try {
             userService.updateUser(userName, user);
         } catch (Exception ex) {
@@ -52,9 +55,9 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/users/{userName}")
-    public void removeUser(@PathVariable String userName) {
-	    userService.deleteUser(userName);
-    }
+    // @DeleteMapping("/users/{userName}")
+    // public void removeUser(@PathVariable String userName) {
+	//     userService.deleteUser(userName);
+    // }
     
 }

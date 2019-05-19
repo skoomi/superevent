@@ -7,16 +7,16 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "role")
-public class Role {
+public class RoleEntity {
 
     @Id
     @Column(name = "role_name")
     private String roleName;
     
-    public Role() {
+    public RoleEntity() {
 	}
 
-	public Role(String roleName) {
+	public RoleEntity(String roleName) {
 		this.roleName = roleName;
 	}
 

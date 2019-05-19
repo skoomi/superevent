@@ -31,7 +31,7 @@ export class NewUserDialogComponent implements OnInit {
     if ( this.employee ) { this.roles.push({roleName: 'ROLE_EMPLOYEE'}); }
     if ( this.admin ) { this.roles.push({roleName: 'ROLE_ADMIN'}); }
     this.newUser.roles = this.roles;
-
+    this.newUser.events = [];
     this.userService.addUser(this.newUser).subscribe();
   }
 }

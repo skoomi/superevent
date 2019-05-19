@@ -8,47 +8,43 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 // ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Entity
-@Table(name = "event")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "id")
-public class MyEvent {
+public class EventDto {
 
-    @Id
-    @Column(name = "id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "price")
     private double price;
 
-    @Column(name = "lessons")
     private int lessons;
 
-    @Column(name = "timetable")
     private String timetable;
 
-    @Column(name = "short_description")
     private String shortDescription;
 
-    @Column(name = "description")
     private String description;
 
-    @Column(name = "imgPath")
     private String imgPath;
 
-    @Column(name = "seats")
     private int seats;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.REFRESH})
-	@JoinTable(name = "users_events", 
-	joinColumns = @JoinColumn(name = "event"), 
-	inverseJoinColumns = @JoinColumn(name = "user"))
-    private List<User> users;
+    private List<UserSimple> users;
 
-    
+    public EventDto() {
+        
+    }
+
+    public EventDto(EventEntity event) {
+        this.id = event.getId();
+        this.name = event.getName();
+        this.price = event.getPrice();
+        this.lessons = event.getLessons();
+        this.timetable = event.getTimetable();
+        this.shortDescription = event.getShortDescription();
+        this.description = event.getDescription();
+        this.imgPath = event.getImgPath();
+        this.seats = event.getSeats();
+    }
     /**
      * @return the id
      */
@@ -178,14 +174,14 @@ public class MyEvent {
     /**
      * @return the users
      */
-    public List<User> getUsers() {
+    public List<UserSimple> getUsers() {
         return users;
     }
 
     /**
      * @param users the users to set
      */
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserSimple> users) {
         this.users = users;
     }
     

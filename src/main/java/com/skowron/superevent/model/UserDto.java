@@ -9,45 +9,24 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@Entity
-@Table(name = "user")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "userName")
-public class User {
 
-    @Id
-	@Column(name = "user_name")
+public class UserDto {
+
 	private String userName;
 
-	@Column(name = "password")
 	private String password;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.REFRESH})
-	@JoinTable(name = "users_roles", 
-	joinColumns = @JoinColumn(name = "user"), 
-	inverseJoinColumns = @JoinColumn(name = "role"))
-    private List<Role> roles;
+    private List<RoleEntity> roles;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.REFRESH})
-	@JoinTable(name = "users_events", 
-	joinColumns = @JoinColumn(name = "user"), 
-	inverseJoinColumns = @JoinColumn(name = "event"))
-    private List<MyEvent> events;
+    private List<EventSimple> events;
 
-    public User() {
-	}
-
-	public User(String userName, String password) {
-		this.userName = userName;
-		this.password = password;
-	}
-
-	public User(String userName, String password, List<Role> roles, List<MyEvent> events) {
-		this.userName = userName;
-		this.password = password;
-		this.roles = roles;
-		this.events = events;
-	}
-
+    public UserDto() {
+    }
+    public UserDto(UserEntity userEntity) {
+        this.userName = userEntity.getUserName();
+        this.password = userEntity.getPassword();
+        this.roles = userEntity.getRoles();
+    }
 
     /**
      * @return the userName
@@ -80,28 +59,28 @@ public class User {
     /**
      * @return the roles
      */
-    public List<Role> getRoles() {
+    public List<RoleEntity> getRoles() {
         return roles;
     }
 
     /**
      * @param roles the roles to set
      */
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<RoleEntity> roles) {
         this.roles = roles;
     }
 
     /**
      * @return the events
      */
-    public List<MyEvent> getEvents() {
+    public List<EventSimple> getEvents() {
         return events;
     }
 
     /**
      * @param roles the roles to set
      */
-    public void setEvents(List<MyEvent> events) {
+    public void setEvents(List<EventSimple> events) {
         this.events = events;
     }
 }
