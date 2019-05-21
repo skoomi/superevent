@@ -37,6 +37,7 @@ public class EventEntity {
     private String description;
 
     @Column(name = "imgPath")
+    
     private String imgPath;
 
     @Column(name = "seats")

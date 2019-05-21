@@ -37,6 +37,13 @@ public class EventService {
 
         return eventDtos;
     }
+    
+    public EventDto getEvent(Long id) {
+        EventEntity eventEntity = eventRepository.getOne(id);
+        EventDto eventDto = EntitiesToDtoMapper.EventEntityToEventDto(eventEntity);
+
+        return eventDto;
+    }
 
     // public MyEvent addEvent(MyEvent myEvent) {
     //     return myEventRepository.save(myEvent);

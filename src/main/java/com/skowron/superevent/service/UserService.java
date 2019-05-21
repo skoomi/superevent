@@ -11,5 +11,5 @@ public interface UserService extends UserDetailsService {
     void save(UserDto user) throws Exception;
     List<UserDto> getAllUsers();
     // void deleteUser(String userName);
-    UserDto updateUser(String userName, UserDto user) throws Exception;
+    // UserDto updateUser(String userName, UserDto user) throws Exception;
 }

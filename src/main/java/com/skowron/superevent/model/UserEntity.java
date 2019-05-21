@@ -36,6 +36,11 @@ public class UserEntity {
     public UserEntity() {
 	}
 
+    public UserEntity(UserDto userDto) {
+        this.userName = userDto.getUserName();
+        this.password = userDto.getPassword();
+        this.roles = userDto.getRoles();
+	}
     /**
      * @return the userName
      */

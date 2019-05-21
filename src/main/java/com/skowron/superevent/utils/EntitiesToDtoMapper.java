@@ -25,6 +25,9 @@ public class EntitiesToDtoMapper {
     }
 
     public static UserDto UserEntityToUserDto(UserEntity userEntity) {
+        if(userEntity == null) {
+            return null;
+        }
         UserDto userDto = new UserDto(userEntity);
         List<EventSimple> eventsSimple = new ArrayList<EventSimple>();
         

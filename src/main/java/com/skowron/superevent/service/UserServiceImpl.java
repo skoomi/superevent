@@ -42,11 +42,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto findByUserName(String userName) {
         UserEntity userEntity = userRepository.findByUserName(userName);
-        if(userEntity == null) {
-            return null;
-        }
-        System.out.println(userEntity);
         UserDto userDto = EntitiesToDtoMapper.UserEntityToUserDto(userEntity);
+        
         return userDto;
     }
 
@@ -103,27 +100,27 @@ public class UserServiceImpl implements UserService {
     //     userRepository.deleteByUserName(userName);
     // }
 
-    @Override
-    @Transactional
-    public UserDto updateUser(String userName, UserDto user) throws Exception {
-        if ( userName.equals(user.getUserName())) {
-            System.out.println("userName == user.getUserName()");
-            UserEntity newUser = new UserEntity();
-            return userRepository.save(user);
-        }
-        else {
-            System.out.println("userName != user.getUserName()");
+    // @Override
+    // @Transactional
+    // public UserDto updateUser(String userName, UserDto user) throws Exception {
+    //     if ( userName.equals(user.getUserName())) {
+    //         System.out.println("userName == user.getUserName()");
+    //         UserEntity newUser = new UserEntity();
+    //         return userRepository.save(user);
+    //     }
+    //     else {
+    //         System.out.println("userName != user.getUserName()");
 
-            User existing = findByUserName(user.getUserName());
-            if (existing != null){
-                throw new Exception("User with given userName already exists!");
-            }
-            User oldUser = userRepository.getOne(userName);
-            userRepository.deleteByUserName(oldUser.getUserName());
-            return userRepository.save(user);
-        }
+    //         User existing = findByUserName(user.getUserName());
+    //         if (existing != null){
+    //             throw new Exception("User with given userName already exists!");
+    //         }
+    //         User oldUser = userRepository.getOne(userName);
+    //         userRepository.deleteByUserName(oldUser.getUserName());
+    //         return userRepository.save(user);
+    //     }
 
-    }
+    // }
     
     
 

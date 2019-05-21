@@ -49,7 +49,7 @@ public class UserController {
     @PutMapping("/users/{userName}")
     public void updateEvent(@PathVariable String userName, @RequestBody UserDto user) {
 	    try {
-            userService.updateUser(userName, user);
+            // userService.updateUser(userName, user);
         } catch (Exception ex) {
             System.out.println(ex);
         }

@@ -5,5 +5,4 @@ import com.skowron.superevent.model.EventEntity;
 
 // @CrossOrigin(origins = "http://localhost:4200")
 public interface EventRepository extends JpaRepository<EventEntity, Long>{
-//	Page<Product> findByBillId(Long billId, Pageable pageable);
 }
